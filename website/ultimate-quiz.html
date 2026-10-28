@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS SAA-C03 Ultimate Practice Quiz</title>
+    <meta name="description" content="Interactive AWS SAA-C03 practice quiz with 325 original questions, 5 full mock exams, topic filtering, score summary, and official AWS doc links.">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://berkaycakibey.github.io/aws-saa-tips/website/ultimate-quiz.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AWS SAA-C03 Ultimate Practice Quiz">
+    <meta property="og:description" content="Interactive AWS SAA-C03 quiz with 325 original questions, topic filters, score tracking, and official AWS documentation links.">
+    <meta property="og:url" content="https://berkaycakibey.github.io/aws-saa-tips/website/ultimate-quiz.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AWS SAA-C03 Ultimate Practice Quiz">
+    <meta name="twitter:description" content="Interactive AWS SAA-C03 quiz with 325 original questions, topic filters, score tracking, and official AWS documentation links.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255,153,0,0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(255,153,0,0.3);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff9900, #ff6b00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: #888;
+            margin-bottom: 20px;
+        }
+        
+        .exam-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .exam-info span {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .header-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .header-link {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .header-link:hover {
+            border-color: #ff9900;
+            color: #ff9900;
+        }
+
+        .profile-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .exam-selector {
+            background: #1e1e3f;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .mode-selector,
+        .custom-builder,
+        .legal-note {
+            background: #1e1e3f;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,153,0,0.18);
+        }
+
+        .mode-selector h3,
+        .custom-builder h3,
+        .legal-note h3 {
+            color: #ff9900;
+            margin-bottom: 12px;
+        }
+
+        .mode-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .mode-btn {
+            background: #2a2a4a;
+            border: 2px solid #3a3a5a;
+            color: #fff;
+            padding: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            line-height: 1.45;
+        }
+
+        .mode-btn strong {
+            display: block;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .mode-btn.active {
+            background: rgba(255,153,0,0.2);
+            border-color: #ff9900;
+        }
+        
+        .exam-selector h3 {
+            color: #ff9900;
+            margin-bottom: 15px;
+        }
+        
+        .exam-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .exam-checkbox {
+            display: none;
+        }
+        
+        .exam-label {
+            background: #2a2a4a;
+            border: 2px solid #3a3a5a;
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        
+        .exam-checkbox:checked + .exam-label {
+            background: rgba(255,153,0,0.2);
+            border-color: #ff9900;
+        }
+        
+        .exam-label:hover {
+            border-color: #ff9900;
+        }
+        
+        .select-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .select-btn {
+            background: #3a3a5a;
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        
+        .select-btn:hover {
+            background: #4a4a6a;
+        }
+        
+        .question-count {
+            color: #888;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .topic-filter {
+            background: #1e1e3f;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .topic-filter h3 {
+            color: #ff9900;
+            margin-bottom: 15px;
+        }
+        
+        .topic-filter-note {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .custom-controls {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 180px;
+            gap: 18px;
+            align-items: end;
+        }
+
+        .custom-category-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .custom-topic-checkbox {
+            display: none;
+        }
+
+        .custom-topic-label {
+            background: #2a2a4a;
+            border: 2px solid #3a3a5a;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .custom-topic-checkbox:checked + .custom-topic-label {
+            background: rgba(255,153,0,0.2);
+            border-color: #ff9900;
+        }
+
+        .custom-count-field label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .custom-count-field input {
+            width: 100%;
+            background: #2a2a4a;
+            border: 2px solid #3a3a5a;
+            color: #fff;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1rem;
+        }
+
+        .custom-summary {
+            color: #cbd5e1;
+            font-size: 0.92rem;
+            margin-top: 12px;
+            line-height: 1.5;
+        }
+        
+        .filter-btn {
+            background: #2a2a4a;
+            border: 2px solid #3a3a5a;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+        
+        .filter-btn:hover {
+            border-color: #ff9900;
+        }
+        
+        .filter-btn.active {
+            background: rgba(255,153,0,0.2);
+            border-color: #ff9900;
+        }
+        
+        .filter-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+        
+        .start-exam {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .start-btn {
+            background: linear-gradient(90deg, #ff9900, #ff6b00);
+            color: #fff;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .start-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .start-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .progress-container {
+            background: #2a2a4a;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-bar {
+            flex: 1;
+            margin: 0 20px;
+            background: #3a3a5a;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #ff9900, #ff6b00);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .question-card {
+            background: #1e1e3f;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: none;
+        }
+        
+        .question-card.active {
+            display: block;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .question-number {
+            color: #ff9900;
+            font-weight: 600;
+        }
+        
+        .question-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .question-exam {
+            background: rgba(100,100,255,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+        
+        .question-topic {
+            background: rgba(255,153,0,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+
+        .explanation-toggle {
+            background: rgba(100,100,255,0.3);
+            border: 0;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .explanation-toggle:focus-visible,
+        .option:focus-visible,
+        .nav-btn:focus-visible,
+        .start-btn:focus-visible,
+        .filter-btn:focus-visible,
+        .select-btn:focus-visible,
+        .mode-btn:focus-visible {
+            outline: 3px solid #4ecdc4;
+            outline-offset: 3px;
+        }
+        
+        .score-display {
+            background: rgba(0,255,0,0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            background: #2a2a4a;
+            border: 2px solid #3a3a5a;
+            border-radius: 10px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            text-align: left;
+        }
+        
+        .option:hover {
+            border-color: #ff9900;
+            background: #2a2a5a;
+        }
+        
+        .option.selected {
+            border-color: #ff9900;
+            background: rgba(255,153,0,0.2);
+        }
+        
+        .option.correct {
+            border-color: #4ade80;
+            background: rgba(74,222,128,0.2);
+        }
+        
+        .option.incorrect {
+            border-color: #f87171;
+            background: rgba(248,113,113,0.2);
+        }
+        
+        .explanation {
+            background: #252545;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+            border-left: 4px solid #ff9900;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .explanation h4 {
+            color: #ff9900;
+            margin-bottom: 10px;
+        }
+        
+        .explanation p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+        
+        .key-rule {
+            background: rgba(255,153,0,0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            color: #ff9900;
+            font-weight: 600;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background: #2a2a4a;
+            color: #fff;
+            border: 2px solid #3a3a5a;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .nav-btn:hover {
+            border-color: #ff9900;
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn.submit-btn {
+            background: #ff9900;
+            border-color: #ff9900;
+            color: #000;
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+        }
+        
+        .results.active {
+            display: block;
+        }
+        
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: #1e1e3f;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 30px auto;
+            border: 6px solid #ff9900;
+        }
+        
+        .score-number {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ff9900;
+        }
+        
+        .score-label {
+            color: #888;
+            font-size: 1rem;
+        }
+        
+        .results h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .score-message {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat {
+            background: #1e1e3f;
+            padding: 15px;
+            border-radius: 12px;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            color: #888;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        
+        .correct-count { color: #4ade80; }
+        .incorrect-count { color: #f87171; }
+        
+        .topic-breakdown {
+            background: #1e1e3f;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .topic-breakdown h3 {
+            color: #ff9900;
+            margin-bottom: 15px;
+        }
+        
+        .topic-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a2a4a;
+        }
+        
+        .topic-name {
+            color: #fff;
+        }
+        
+        .topic-score {
+            font-weight: bold;
+        }
+        
+        .exam-breakdown {
+            background: #1e1e3f;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .exam-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a2a4a;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+
+            header,
+            .exam-selector,
+            .topic-filter,
+            .question-card,
+            .results {
+                padding: 18px;
+            }
+
+            h1 {
+                font-size: 1.55rem;
+            }
+
+            .subtitle {
+                font-size: 0.95rem;
+            }
+
+            .exam-info,
+            .select-buttons,
+            .mode-buttons,
+            .custom-controls,
+            .nav-buttons,
+            .progress-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .mode-buttons,
+            .custom-controls {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+
+            .progress-bar {
+                margin: 8px 0;
+                width: 100%;
+            }
+
+            .question-text {
+                font-size: 1rem;
+            }
+
+            .option {
+                padding: 14px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .exam-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-btn,
+            .custom-topic-label,
+            .select-btn,
+            .mode-btn,
+            .nav-btn,
+            .start-btn,
+            .header-link {
+                width: 100%;
+            }
+
+            .score-circle {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        .docs-links {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0, 123, 255, 0.1);
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .docs-links a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .docs-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AWS SAA-C03 Ultimate Practice Quiz</h1>
+            <p class="subtitle">325 original questions across 5 full mock exams</p>
+            <div class="exam-info">
+                <span>📝 <span id="totalQuestions">0</span> Questions</span>
+                <span>⏱️ ~<span id="totalTime">0</span> Minutes</span>
+                <span>📊 Passing: 72%</span>
+            </div>
+            <div class="header-links">
+                <a href="../index.html" class="header-link">🏠 Home</a>
+                <a href="https://github.com/BerkayCakibey/aws-saa-tips" class="header-link" target="_blank" rel="noopener noreferrer">⭐ GitHub Repo</a>
+            </div>
+            <div class="profile-links">
+                <a href="https://github.com/BerkayCakibey" class="header-link" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
+                <a href="https://www.linkedin.com/in/berkay-cakibey/" class="header-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="mailto:hello@berkaycakibey.com" class="header-link">Contact</a>
+            </div>
+        </header>
+
+        <div class="legal-note" id="legalNote">
+            <h3>Independent Practice Resource</h3>
+            <p class="topic-filter-note">Created by Berkay Cakibey. These questions were written from scratch for study practice. This site is unofficial and is not affiliated with, endorsed by, sponsored by, or provided by Amazon Web Services. AWS service names and links are used only to identify the relevant official documentation. For corrections, contact <a href="mailto:hello@berkaycakibey.com">hello@berkaycakibey.com</a>.</p>
+        </div>
+
+        <div class="mode-selector" id="modeSelector">
+            <h3>Choose Quiz Mode</h3>
+            <div class="mode-buttons">
+                <button class="mode-btn active" id="examModeBtn" onclick="setQuizMode('exam')">
+                    <strong>Mock Exam Mode</strong>
+                    Pick one or more full 65-question practice exams.
+                </button>
+                <button class="mode-btn" id="customModeBtn" onclick="setQuizMode('custom')">
+                    <strong>Create Your Own Quiz</strong>
+                    Choose categories and the number of questions from the full 325-question pool.
+                </button>
+            </div>
+        </div>
+        
+        <div class="exam-selector" id="examSelector">
+            <h3>Select Practice Exams</h3>
+            <div class="select-buttons">
+                <button class="select-btn" onclick="selectAll()">Select All (5)</button>
+                <button class="select-btn" onclick="selectNone()">Clear All</button>
+                <button class="select-btn" onclick="selectFirst5()">All 5 Exams</button>
+            </div>
+            <div class="exam-grid">
+                <input type="checkbox" id="exam1" value="1" class="exam-checkbox" checked>
+                <label for="exam1" class="exam-label">Exam 1</label>
+                
+                <input type="checkbox" id="exam2" value="2" class="exam-checkbox" checked>
+                <label for="exam2" class="exam-label">Exam 2</label>
+                
+                <input type="checkbox" id="exam3" value="3" class="exam-checkbox" checked>
+                <label for="exam3" class="exam-label">Exam 3</label>
+                
+                <input type="checkbox" id="exam4" value="4" class="exam-checkbox" checked>
+                <label for="exam4" class="exam-label">Exam 4</label>
+                
+                <input type="checkbox" id="exam5" value="5" class="exam-checkbox" checked>
+                <label for="exam5" class="exam-label">Exam 5</label>
+                
+            </div>
+            <p class="question-count">Selected: <span id="selectedCount">5</span> exams = <span id="selectedQuestions">325</span> questions</p>
+        </div>
+        
+        <div class="topic-filter" id="topicFilter">
+            <h3>Filter by Topic (Optional)</h3>
+            <p class="topic-filter-note">Topics reflect the primary study theme of each question. Some questions span multiple AWS services, but each one is assigned to a single main category for filtering.</p>
+            <div class="filter-options">
+                <button class="filter-btn active" data-topic="all" data-label="All Topics" onclick="setTopic(this, 'all')">All Topics</button>
+                <button class="filter-btn" data-topic="Storage" data-label="Storage" onclick="setTopic(this, 'Storage')">Storage</button>
+                <button class="filter-btn" data-topic="Compute" data-label="Compute" onclick="setTopic(this, 'Compute')">Compute</button>
+                <button class="filter-btn" data-topic="Database" data-label="Database" onclick="setTopic(this, 'Database')">Database</button>
+                <button class="filter-btn" data-topic="Security" data-label="Security" onclick="setTopic(this, 'Security')">Security</button>
+                <button class="filter-btn" data-topic="Networking" data-label="Networking" onclick="setTopic(this, 'Networking')">Networking</button>
+                <button class="filter-btn" data-topic="Decoupling" data-label="Decoupling" onclick="setTopic(this, 'Decoupling')">Decoupling</button>
+                <button class="filter-btn" data-topic="Cost Optimization" data-label="Cost Optimization" onclick="setTopic(this, 'Cost Optimization')">Cost Optimization</button>
+                <button class="filter-btn" data-topic="Migration" data-label="Migration" onclick="setTopic(this, 'Migration')">Migration</button>
+                <button class="filter-btn" data-topic="Architecture" data-label="Architecture" onclick="setTopic(this, 'Architecture')">Architecture</button>
+                <button class="filter-btn" data-topic="Serverless" data-label="Serverless" onclick="setTopic(this, 'Serverless')">Serverless</button>
+                <button class="filter-btn" data-topic="High Availability & Resilience" data-label="HA & Resilience" onclick="setTopic(this, 'High Availability & Resilience')">HA & Resilience</button>
+                <button class="filter-btn" data-topic="Operations" data-label="Operations" onclick="setTopic(this, 'Operations')">Operations</button>
+                <button class="filter-btn" data-topic="Governance" data-label="Governance" onclick="setTopic(this, 'Governance')">Governance</button>
+                <button class="filter-btn" data-topic="Hybrid" data-label="Hybrid" onclick="setTopic(this, 'Hybrid')">Hybrid</button>
+                <button class="filter-btn" data-topic="Analytics" data-label="Analytics" onclick="setTopic(this, 'Analytics')">Analytics</button>
+                <button class="filter-btn" data-topic="Performance" data-label="Performance" onclick="setTopic(this, 'Performance')">Performance</button>
+            </div>
+        </div>
+
+        <div class="custom-builder" id="customBuilder" style="display: none;">
+            <h3>Create Your Own Quiz</h3>
+            <p class="topic-filter-note">Build a custom quiz from the complete 325-question pool. Select one or more categories, choose the number of questions, and the quiz will draw a randomized set from the matching questions.</p>
+            <div class="select-buttons">
+                <button class="select-btn" onclick="selectAllCustomTopics()">Select All Categories</button>
+                <button class="select-btn" onclick="clearCustomTopics()">Clear Categories</button>
+            </div>
+            <div class="custom-controls">
+                <div>
+                    <div class="custom-category-grid" id="customCategoryGrid"></div>
+                </div>
+                <div class="custom-count-field">
+                    <label for="customQuestionCount">Question count</label>
+                    <input type="number" id="customQuestionCount" min="1" max="325" value="25" inputmode="numeric">
+                </div>
+            </div>
+            <p class="custom-summary" id="customSummary">Selected pool: 325 questions. Quiz length: 25 questions.</p>
+        </div>
+        
+        <div class="start-exam" id="startScreen">
+            <button class="nav-btn" onclick="backToHome()" style="margin-bottom: 20px; padding: 10px 20px;">🏠 Home</button>
+            <button class="start-btn" id="startBtn" onclick="startExam()">Start Quiz</button>
+        </div>
+        
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <button class="nav-btn" onclick="backToHome()" style="padding: 8px 16px; font-size: 0.85rem;">🏠 Home</button>
+            <span id="qCounter" aria-live="polite">Question 1/X</span>
+            <div class="progress-bar" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span id="timeDisplay" aria-live="polite">00:00</span>
+        </div>
+        
+        <div id="quizContainer"></div>
+        
+        <div class="results" id="results">
+            <h2>Quiz Complete!</h2>
+            <div class="score-circle">
+                <div class="score-number" id="finalScore">0</div>
+                <div class="score-label">out of <span id="finalTotal">65</span></div>
+            </div>
+            <div class="score-message" id="scoreMessage"></div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number correct-count" id="correctCount">0</div>
+                    <div class="stat-label">Correct</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number incorrect-count" id="incorrectCount">0</div>
+                    <div class="stat-label">Incorrect</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="accuracy">0%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="answeredCount">0</div>
+                    <div class="stat-label">Answered</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="durationSpent">00:00</div>
+                    <div class="stat-label">Time Spent</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="passFail">-</div>
+                    <div class="stat-label">Result</div>
+                </div>
+            </div>
+            
+            <div class="exam-breakdown" id="examBreakdown">
+                <h3>Performance by Exam</h3>
+            </div>
+            
+            <div class="topic-breakdown" id="topicBreakdown">
+                <h3>Performance by Topic</h3>
+            </div>
+            
+            <button class="nav-btn submit-btn" id="reviewIncorrectBtn" onclick="reviewIncorrectQuestions()" style="display: none;">Review Incorrect Questions</button>
+            <button class="nav-btn" onclick="restartExam()">Try Again</button>
+            <button class="nav-btn" onclick="backToHome()">🏠 Home</button>
+        </div>
+    </div>
+    
+<script src="questions-all.js"></script>
+
+<script>
+// Helpers
+function safeHostname(url) {
+    try { return new URL(url).hostname; } catch(e) { return url; }
+}
+
+// State
+let selectedQuestions = [];
+let currentQuestion = 0;
+let userAnswers = [];
+let timer = null;
+let timeRemaining = 0;
+let selectedTopic = 'all';
+let quizMode = 'exam';
+let selectedCustomTopics = new Set();
+let correctCount = 0;
+let incorrectCount = 0;
+let answeredQuestions = new Set();
+let quizStartedAt = null;
+let lastIncorrectQuestions = [];
+const TOPIC_ORDER = [
+    'Networking',
+    'Storage',
+    'Database',
+    'Migration',
+    'Security',
+    'Compute',
+    'Serverless',
+    'Decoupling',
+    'High Availability & Resilience',
+    'Architecture',
+    'Operations',
+    'Governance',
+    'Cost Optimization',
+    'Hybrid',
+    'Analytics',
+    'Performance'
+];
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    validateTopicCatalog();
+    buildCustomTopicOptions();
+    updateSelectedCount();
+    document.querySelectorAll('.exam-checkbox').forEach(cb => {
+        cb.addEventListener('change', updateSelectedCount);
+    });
+    const customQuestionCount = document.getElementById('customQuestionCount');
+    if (customQuestionCount) {
+        customQuestionCount.addEventListener('input', updateSelectedCount);
+    }
+});
+
+function getSelectedExams() {
+    return Array.from(document.querySelectorAll('.exam-checkbox:checked')).map(cb => parseInt(cb.value));
+}
+
+function validateTopicCatalog() {
+    const allowedTopics = new Set(TOPIC_ORDER);
+    const unexpectedTopics = [...new Set(allExamQuestions
+        .map(q => q.topic)
+        .filter(topic => !allowedTopics.has(topic))
+    )];
+    if (unexpectedTopics.length > 0) {
+        console.warn('Unexpected question topics found:', unexpectedTopics);
+    }
+}
+
+function refreshTopicCounts() {
+    const selectedExams = getSelectedExams();
+    const examScopedQuestions = allExamQuestions.filter(q => selectedExams.includes(q.exam));
+    const topicCounts = Object.fromEntries(TOPIC_ORDER.map(topic => [topic, 0]));
+
+    examScopedQuestions.forEach(q => {
+        if (topicCounts[q.topic] !== undefined) {
+            topicCounts[q.topic] += 1;
+        }
+    });
+
+    if (selectedTopic !== 'all' && topicCounts[selectedTopic] === 0) {
+        selectedTopic = 'all';
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        const topic = btn.dataset.topic;
+        const label = btn.dataset.label;
+        const count = topic === 'all' ? examScopedQuestions.length : (topicCounts[topic] || 0);
+        btn.textContent = `${label} (${count})`;
+        btn.disabled = selectedExams.length > 0 && topic !== 'all' && count === 0;
+        btn.classList.toggle('active', topic === selectedTopic);
+    });
+}
+
+function updateSelectedCount() {
+    const selected = getSelectedExams();
+    const count = selected.length;
+    const questionCount = count * 65;
+    const customPool = getCustomQuestionPool();
+    const customRequested = getCustomQuestionCount();
+    const displayedQuestionCount = quizMode === 'custom' ? Math.min(customRequested, customPool.length) : questionCount;
+
+    document.getElementById('selectedCount').textContent = count;
+    document.getElementById('selectedQuestions').textContent = questionCount;
+    document.getElementById('totalQuestions').textContent = displayedQuestionCount;
+    document.getElementById('totalTime').textContent = Math.ceil(displayedQuestionCount * 2);
+    refreshTopicCounts();
+    updateCustomSummary(customPool, customRequested);
+}
+
+function selectAll() {
+    document.querySelectorAll('.exam-checkbox').forEach(cb => cb.checked = true);
+    updateSelectedCount();
+}
+
+function selectNone() {
+    document.querySelectorAll('.exam-checkbox').forEach(cb => cb.checked = false);
+    updateSelectedCount();
+}
+
+function selectFirst5() {
+    selectNone();
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById('exam' + i).checked = true;
+    }
+    updateSelectedCount();
+}
+
+function setTopic(button, topic) {
+    selectedTopic = topic;
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    if (button) {
+        button.classList.add('active');
+    } else {
+        const activeButton = document.querySelector(`.filter-btn[data-topic="${topic}"]`);
+        if (activeButton) activeButton.classList.add('active');
+    }
+}
+
+function setQuizMode(mode) {
+    quizMode = mode;
+    document.getElementById('examModeBtn').classList.toggle('active', mode === 'exam');
+    document.getElementById('customModeBtn').classList.toggle('active', mode === 'custom');
+    document.getElementById('examSelector').style.display = mode === 'exam' ? 'block' : 'none';
+    document.getElementById('topicFilter').style.display = mode === 'exam' ? 'block' : 'none';
+    document.getElementById('customBuilder').style.display = mode === 'custom' ? 'block' : 'none';
+    updateSelectedCount();
+}
+
+function buildCustomTopicOptions() {
+    const grid = document.getElementById('customCategoryGrid');
+    if (!grid) return;
+
+    const counts = Object.fromEntries(TOPIC_ORDER.map(topic => [topic, 0]));
+    allExamQuestions.forEach(q => {
+        if (counts[q.topic] !== undefined) counts[q.topic] += 1;
+    });
+
+    selectedCustomTopics = new Set(TOPIC_ORDER);
+    grid.innerHTML = TOPIC_ORDER.map((topic, index) => {
+        const id = `customTopic${index}`;
+        return `
+            <input type="checkbox" id="${id}" value="${topic}" class="custom-topic-checkbox" checked>
+            <label for="${id}" class="custom-topic-label">${topic} (${counts[topic] || 0})</label>
+        `;
+    }).join('');
+
+    grid.querySelectorAll('.custom-topic-checkbox').forEach(cb => {
+        cb.addEventListener('change', () => {
+            selectedCustomTopics = new Set(Array.from(document.querySelectorAll('.custom-topic-checkbox:checked')).map(item => item.value));
+            updateSelectedCount();
+        });
+    });
+}
+
+function selectAllCustomTopics() {
+    document.querySelectorAll('.custom-topic-checkbox').forEach(cb => cb.checked = true);
+    selectedCustomTopics = new Set(TOPIC_ORDER);
+    updateSelectedCount();
+}
+
+function clearCustomTopics() {
+    document.querySelectorAll('.custom-topic-checkbox').forEach(cb => cb.checked = false);
+    selectedCustomTopics = new Set();
+    updateSelectedCount();
+}
+
+function getCustomQuestionPool() {
+    if (selectedCustomTopics.size === 0) return [];
+    return allExamQuestions.filter(q => selectedCustomTopics.has(q.topic));
+}
+
+function getCustomQuestionCount() {
+    const input = document.getElementById('customQuestionCount');
+    const parsed = input ? parseInt(input.value, 10) : 25;
+    return Number.isFinite(parsed) ? Math.max(1, parsed) : 25;
+}
+
+function shuffleQuestions(questions) {
+    const shuffled = [...questions];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+function updateCustomSummary(pool = getCustomQuestionPool(), requested = getCustomQuestionCount()) {
+    const summary = document.getElementById('customSummary');
+    const input = document.getElementById('customQuestionCount');
+    if (!summary || !input) return;
+
+    input.max = allExamQuestions.length;
+
+    const selectedCount = selectedCustomTopics.size;
+    if (selectedCount === 0) {
+        summary.textContent = 'Select at least one category to create a custom quiz.';
+        summary.style.color = '#f87171';
+    } else if (requested > pool.length) {
+        summary.textContent = `Selected pool: ${pool.length} questions across ${selectedCount} categories. Requested: ${requested}. Select more categories or lower the question count.`;
+        summary.style.color = '#f87171';
+    } else {
+        summary.textContent = `Selected pool: ${pool.length} questions across ${selectedCount} categories. Quiz length: ${requested} questions. Questions are randomized from this pool each time.`;
+        summary.style.color = '#cbd5e1';
+    }
+}
+
+function startExam() {
+    if (quizMode === 'custom') {
+        const pool = getCustomQuestionPool();
+        if (pool.length === 0) {
+            alert('Please select at least one category.');
+            return;
+        }
+
+        const requestedCount = getCustomQuestionCount();
+        if (requestedCount > pool.length) {
+            alert(`The selected categories contain ${pool.length} questions, but you requested ${requestedCount}. Select more categories or lower the question count.`);
+            return;
+        }
+
+        selectedQuestions = shuffleQuestions(pool).slice(0, requestedCount);
+        launchQuiz();
+        return;
+    }
+
+    const selectedExams = getSelectedExams();
+    if (selectedExams.length === 0) {
+        alert('Please select at least one exam.');
+        return;
+    }
+    
+    // Filter questions by selected exams and one canonical topic.
+    selectedQuestions = allExamQuestions.filter(q => 
+        selectedExams.includes(q.exam) &&
+        (selectedTopic === 'all' || q.topic === selectedTopic)
+    );
+    
+    if (selectedQuestions.length === 0) {
+        alert('No questions match the selected criteria.');
+        return;
+    }
+    selectedQuestions = shuffleQuestions(selectedQuestions);
+    launchQuiz();
+}
+
+function launchQuiz() {
+    if (selectedQuestions.length === 0) {
+        alert('No questions match the selected criteria.');
+        return;
+    }
+    
+    // Initialize answers
+    userAnswers = new Array(selectedQuestions.length).fill(null);
+    currentQuestion = 0;
+    
+    // Reset score tracking
+    correctCount = 0;
+    incorrectCount = 0;
+    answeredQuestions = new Set();
+    quizStartedAt = Date.now();
+    
+    // Setup timer
+    timeRemaining = selectedQuestions.length * 2 * 60; // 2 min per question
+    startTimer();
+    
+    // Show quiz
+    document.getElementById('results').classList.remove('active');
+    document.getElementById('quizContainer').innerHTML = '';
+    document.getElementById('modeSelector').style.display = 'none';
+    document.getElementById('legalNote').style.display = 'none';
+    document.getElementById('examSelector').style.display = 'none';
+    document.getElementById('topicFilter').style.display = 'none';
+    document.getElementById('customBuilder').style.display = 'none';
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('progressContainer').style.display = 'flex';
+    
+    showQuestion();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        if (timeRemaining <= 0) {
+            finishQuiz('time');
+        }
+    }, 1000);
+}
+
+function formatDuration(totalSeconds) {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+function updateTimerDisplay() {
+    document.getElementById('timeDisplay').textContent = formatDuration(Math.max(0, timeRemaining));
+}
+
+function showQuestion() {
+    const q = selectedQuestions[currentQuestion];
+    const container = document.getElementById('quizContainer');
+    const onLastQuestion = currentQuestion === selectedQuestions.length - 1;
+    
+    // Update progress
+    document.getElementById('qCounter').textContent = `Question ${currentQuestion + 1}/${selectedQuestions.length}`;
+    const progressPercent = ((currentQuestion + 1) / selectedQuestions.length) * 100;
+    document.getElementById('progressFill').style.width = `${progressPercent}%`;
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) progressBar.setAttribute('aria-valuenow', Math.round(progressPercent).toString());
+    
+    // Build question HTML
+    let html = `
+        <div class="question-card active">
+            <div class="question-header">
+                    <span class="question-number">Question ${currentQuestion + 1}</span>
+                <div class="question-meta">
+                    <span class="question-exam">Exam ${q.exam}</span>
+                    <span class="question-topic">${q.topic}</span>
+                    <span class="score-display" id="scoreDisplay" aria-live="polite">✅ ${correctCount} | ❌ ${incorrectCount}</span>
+                    <button type="button" class="explanation-toggle" id="explanationToggle" aria-controls="explanation" aria-expanded="false" onclick="toggleExplanation()">👁️ Explanation</button>
+                </div>
+            </div>
+            <div class="question-text">${q.q}</div>
+            <div class="options">
+    `;
+    
+    q.options.forEach((opt, i) => {
+        const selected = userAnswers[currentQuestion] === i ? 'selected' : '';
+        const pressed = userAnswers[currentQuestion] === i ? 'true' : 'false';
+        html += `<div class="option ${selected}" role="button" tabindex="0" aria-pressed="${pressed}" onclick="selectOption(${i})" onkeydown="handleOptionKeydown(event, ${i})">${opt}</div>`;
+    });
+    
+    html += `
+            </div>
+            <div class="explanation" id="explanation">
+                <h4>Explanation</h4>
+                <p>${q.explanation}</p>
+                <div class="key-rule">${q.keyRule}</div>
+                ${q.docs && q.docs.length > 0 ? `<div class="docs-links">📖 AWS Docs: ${q.docs.map(url => `<a href="${url}" target="_blank" rel="noopener noreferrer">${safeHostname(url)}</a>`).join(' | ')}</div>` : ''}
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="prevQuestion()" ${currentQuestion === 0 ? 'disabled' : ''}>Previous</button>
+                <button class="nav-btn ${onLastQuestion ? 'submit-btn' : ''}" onclick="${onLastQuestion ? "finishQuiz('manual')" : 'nextQuestion()'}">${onLastQuestion ? 'Finish Quiz' : 'Next'}</button>
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+    
+    // Ensure explanation is hidden by default when showing new question
+    const expDiv = document.getElementById('explanation');
+    if (expDiv) expDiv.classList.remove('show');
+}
+
+function selectOption(index) {
+    if (answeredQuestions.has(currentQuestion)) {
+        return;
+    }
+
+    userAnswers[currentQuestion] = index;
+    
+    answeredQuestions.add(currentQuestion);
+    
+    const q = selectedQuestions[currentQuestion];
+    const isCorrect = index === q.correct;
+    
+    // Update score.
+    if (isCorrect) correctCount++;
+    else incorrectCount++;
+    
+    // Show immediate feedback.
+    document.querySelectorAll('.option').forEach((opt, i) => {
+        opt.classList.remove('selected');
+        opt.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+        if (i === q.correct) opt.classList.add('correct');
+        if (i === index && !isCorrect) opt.classList.add('incorrect');
+    });
+    
+    // Refresh the visible score.
+    updateScoreDisplay();
+}
+
+function handleOptionKeydown(event, index) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        selectOption(index);
+    }
+}
+
+function toggleExplanation() {
+    const exp = document.getElementById('explanation');
+    if (exp) {
+        const isShown = exp.classList.toggle('show');
+        const toggle = document.getElementById('explanationToggle');
+        if (toggle) toggle.setAttribute('aria-expanded', isShown ? 'true' : 'false');
+    }
+}
+
+function updateScoreDisplay() {
+    const display = document.getElementById('scoreDisplay');
+    if (display) {
+        display.innerHTML = `✅ ${correctCount} | ❌ ${incorrectCount}`;
+    }
+}
+
+function nextQuestion() {
+    if (currentQuestion < selectedQuestions.length - 1) {
+        currentQuestion++;
+        showQuestion();
+    }
+}
+
+function prevQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion();
+    }
+}
+
+function buildQuizSummary(reason = 'manual') {
+    const examScores = {};
+    const topicScores = {};
+    let correct = 0;
+    let incorrect = 0;
+    let unanswered = 0;
+    
+    selectedQuestions.forEach((q, i) => {
+        const answer = userAnswers[i];
+        const examScore = examScores[q.exam] || {correct: 0, incorrect: 0, unanswered: 0, total: 0};
+        const topicScore = topicScores[q.topic] || {correct: 0, incorrect: 0, unanswered: 0, total: 0};
+        examScore.total++;
+        topicScore.total++;
+        
+        if (answer === null) {
+            unanswered++;
+            examScore.unanswered++;
+            topicScore.unanswered++;
+        } else if (answer === q.correct) {
+            correct++;
+            examScore.correct++;
+            topicScore.correct++;
+        } else {
+            incorrect++;
+            examScore.incorrect++;
+            topicScore.incorrect++;
+        }
+        
+        examScores[q.exam] = examScore;
+        topicScores[q.topic] = topicScore;
+    });
+    
+    const total = selectedQuestions.length;
+    const answered = correct + incorrect;
+    const percentage = total === 0 ? 0 : Math.round((correct / total) * 100);
+    const durationSeconds = quizStartedAt ? Math.max(0, Math.round((Date.now() - quizStartedAt) / 1000)) : 0;
+    
+    return {
+        reason,
+        total,
+        correct,
+        incorrect,
+        unanswered,
+        answered,
+        percentage,
+        durationSeconds,
+        examScores,
+        topicScores
+    };
+}
+
+function renderQuizSummary(summary) {
+    document.getElementById('finalScore').textContent = summary.correct;
+    document.getElementById('finalTotal').textContent = summary.total;
+    document.getElementById('correctCount').textContent = summary.correct;
+    document.getElementById('incorrectCount').textContent = summary.incorrect;
+    document.getElementById('accuracy').textContent = summary.percentage + '%';
+    document.getElementById('answeredCount').textContent = `${summary.answered}/${summary.total}`;
+    document.getElementById('durationSpent').textContent = formatDuration(summary.durationSeconds);
+    document.getElementById('passFail').textContent = summary.percentage >= 72 ? 'PASS' : 'FAIL';
+    document.getElementById('passFail').style.color = summary.percentage >= 72 ? '#4ade80' : '#f87171';
+    
+    let examHtml = '<h3>Performance by Exam</h3>';
+    Object.keys(summary.examScores).sort((a, b) => a - b).forEach(exam => {
+        const score = summary.examScores[exam];
+        const pct = Math.round((score.correct / score.total) * 100);
+        examHtml += `<div class="exam-row">
+            <span class="topic-name">Exam ${exam}</span>
+            <span class="topic-score" style="color: ${pct >= 72 ? '#4ade80' : '#f87171'}">${score.correct} correct • ${score.incorrect} wrong • ${score.unanswered} unanswered (${pct}%)</span>
+        </div>`;
+    });
+    document.getElementById('examBreakdown').innerHTML = examHtml;
+    
+    let topicHtml = '<h3>Performance by Topic</h3>';
+    Object.keys(summary.topicScores).sort().forEach(topic => {
+        const score = summary.topicScores[topic];
+        const pct = Math.round((score.correct / score.total) * 100);
+        topicHtml += `<div class="topic-row">
+            <span class="topic-name">${topic}</span>
+            <span class="topic-score" style="color: ${pct >= 72 ? '#4ade80' : '#f87171'}">${score.correct} correct • ${score.incorrect} wrong • ${score.unanswered} unanswered (${pct}%)</span>
+        </div>`;
+    });
+    document.getElementById('topicBreakdown').innerHTML = topicHtml;
+    
+    let message = '';
+    if (summary.reason === 'time') message = 'Time is up. Review the unanswered and weak topics.';
+    else if (summary.percentage >= 90) message = 'Excellent! You are well prepared!';
+    else if (summary.percentage >= 80) message = 'Good job! Almost there!';
+    else if (summary.percentage >= 72) message = 'Passed! Review weak areas.';
+    else if (summary.percentage >= 60) message = 'Close to passing. Review explanations.';
+    else message = 'Keep studying! Focus on weak topics.';
+    document.getElementById('scoreMessage').textContent = message;
+
+    const reviewBtn = document.getElementById('reviewIncorrectBtn');
+    if (reviewBtn) {
+        if (lastIncorrectQuestions.length > 0) {
+            reviewBtn.style.display = 'inline-block';
+            reviewBtn.textContent = `Review ${lastIncorrectQuestions.length} Incorrect Question${lastIncorrectQuestions.length === 1 ? '' : 's'}`;
+        } else {
+            reviewBtn.style.display = 'none';
+        }
+    }
+}
+
+function finishQuiz(reason = 'manual') {
+    clearInterval(timer);
+    timer = null;
+    
+    document.getElementById('progressContainer').style.display = 'none';
+    document.getElementById('quizContainer').innerHTML = '';
+    document.getElementById('results').classList.add('active');
+    
+    const summary = buildQuizSummary(reason);
+    lastIncorrectQuestions = selectedQuestions.filter((q, i) => userAnswers[i] !== null && userAnswers[i] !== q.correct);
+    renderQuizSummary(summary);
+}
+
+function reviewIncorrectQuestions() {
+    if (lastIncorrectQuestions.length === 0) {
+        alert('No incorrect answers to review.');
+        return;
+    }
+
+    selectedQuestions = shuffleQuestions(lastIncorrectQuestions);
+    launchQuiz();
+}
+
+function restartExam() {
+    clearInterval(timer);
+    timer = null;
+    lastIncorrectQuestions = [];
+    document.getElementById('results').classList.remove('active');
+    document.getElementById('modeSelector').style.display = 'block';
+    document.getElementById('legalNote').style.display = 'block';
+    document.getElementById('examSelector').style.display = quizMode === 'exam' ? 'block' : 'none';
+    document.getElementById('topicFilter').style.display = quizMode === 'exam' ? 'block' : 'none';
+    document.getElementById('customBuilder').style.display = quizMode === 'custom' ? 'block' : 'none';
+    document.getElementById('startScreen').style.display = 'block';
+    document.getElementById('progressContainer').style.display = 'none';
+    document.getElementById('quizContainer').innerHTML = '';
+    document.getElementById('progressFill').style.width = '0%';
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) progressBar.setAttribute('aria-valuenow', '0');
+    document.getElementById('qCounter').textContent = 'Question 1/X';
+    document.getElementById('timeDisplay').textContent = '00:00';
+    selectedQuestions = [];
+    userAnswers = [];
+    currentQuestion = 0;
+    correctCount = 0;
+    incorrectCount = 0;
+    answeredQuestions = new Set();
+    quizStartedAt = null;
+    updateSelectedCount();
+}
+
+function backToHome() {
+    if (confirm('Return to home page? Your progress will be lost.')) {
+        window.location.href = '../index.html';
+    }
+}
+</script>
+</body>
+</html>

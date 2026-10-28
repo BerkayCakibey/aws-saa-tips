@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS SAA-C03 Study Guide</title>
+    <meta name="description" content="AWS SAA-C03 study guide covering core services, architecture patterns, exam domains, comparison tables, and review notes.">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://berkaycakibey.github.io/aws-saa-tips/website/study-guide.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AWS SAA-C03 Study Guide">
+    <meta property="og:description" content="Exam-focused AWS SAA-C03 study guide with service comparisons, patterns, gotchas, and review notes.">
+    <meta property="og:url" content="https://berkaycakibey.github.io/aws-saa-tips/website/study-guide.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AWS SAA-C03 Study Guide">
+    <meta name="twitter:description" content="Exam-focused AWS SAA-C03 study guide with service comparisons, patterns, gotchas, and review notes.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            line-height: 1.7;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(30, 30, 63, 0.8);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid rgba(255, 153, 0, 0.3);
+        }
+        h1 { color: #ff9900; font-size: 2rem; margin-bottom: 20px; }
+        h2 { color: #ff9900; margin: 30px 0 15px; border-bottom: 1px solid rgba(255,153,0,0.3); padding-bottom: 10px; }
+        h3 { color: #ffb800; margin: 20px 0 10px; }
+        h4 { color: #ffb800; margin: 15px 0 10px; }
+        .toc {
+            background: rgba(255,153,0,0.1);
+            border: 1px solid rgba(255,153,0,0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .toc h2 { color: #ff9900; margin: 0 0 15px; border: none; padding: 0; }
+        .toc ul { margin: 0; padding-left: 20px; }
+        .toc li { margin: 8px 0; }
+        .toc a { color: #fff; text-decoration: none; }
+        .toc a:hover { color: #ff9900; text-decoration: underline; }
+        a { color: #ff9900; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        code { background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px; color: #4ecdc4; }
+        pre { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; overflow-x: auto; margin: 15px 0; }
+        pre code { background: none; padding: 0; display: block; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { color: #ff9900; background: rgba(0,0,0,0.2); }
+        tr:hover { background: rgba(255,153,0,0.1); }
+        .home-btn {
+            display: inline-block;
+            background: #ff9900;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .home-btn:hover { background: #ffb800; text-decoration: none; }
+        .repo-btn {
+            display: inline-block;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            margin-left: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.18);
+        }
+        .repo-btn:hover { border-color: #ff9900; color: #ff9900; text-decoration: none; }
+        .social-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        blockquote {
+            background: rgba(255,153,0,0.1);
+            border-left: 4px solid #ff9900;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        ul { margin: 15px 0 15px 25px; }
+        li { margin: 8px 0; }
+        hr { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0; }
+        p { margin: 10px 0; }
+        img { max-width: 100%; height: auto; }
+        html { scroll-behavior: smooth; }
+        @media (max-width: 700px) {
+            body { padding: 12px; display: block; }
+            .container { padding: 20px 14px; max-width: 100%; }
+            h1 { font-size: 1.55rem; }
+            h2 { font-size: 1.25rem; }
+            .social-row { flex-direction: column; }
+            .home-btn, .repo-btn { width: 100%; margin-left: 0; text-align: center; }
+            table { table-layout: fixed; width: 100%; font-size: 0.82rem; }
+            th, td { padding: 8px; overflow-wrap: anywhere; word-break: normal; }
+            pre { font-size: 0.82rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="social-row">
+            <a href="../index.html" class="home-btn">🏠 Home</a>
+            <a href="https://github.com/BerkayCakibey/aws-saa-tips" class="repo-btn" target="_blank" rel="noopener noreferrer">⭐ GitHub Repo</a>
+            <a href="https://github.com/BerkayCakibey" class="repo-btn" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
+            <a href="https://www.linkedin.com/in/berkay-cakibey/" class="repo-btn" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+        <h1 id="aws-saa-c03-study-guide">AWS SAA-C03 Study Guide</h1>
+<p>A practical, exam-focused study guide for the AWS Certified Solutions Architect – Associate (SAA-C03) exam.</p>
+<p>This guide summarizes:</p>
+<ul>
+<li>high-frequency AWS services</li>
+<li>common scenario patterns</li>
+<li>answer elimination logic</li>
+<li>last-minute review notes</li>
+</ul>
+<blockquote><strong>Disclaimer</strong>: This is an independent, unofficial study resource based on exam preparation and AWS documentation. It is not affiliated with, endorsed by, sponsored by, reviewed by, or provided by Amazon Web Services. Always verify against the <a href="https://docs.aws.amazon.com/" target="_blank" rel="noopener noreferrer">official AWS documentation</a> and the <a href="https://aws.amazon.com/certification/certified-solutions-architect-associate/" target="_blank" rel="noopener noreferrer">SAA-C03 exam guide</a>.</blockquote>
+<blockquote><strong>Last reviewed</strong>: April 2026</blockquote>
+<hr>
+<h2 id="sources--references">Sources & References</h2>
+<p>This guide was compiled from:</p>
+<ul>
+<li><a href="https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf" target="_blank" rel="noopener noreferrer">AWS SAA-C03 Official Exam Guide</a></li>
+<li><a href="https://aws.amazon.com/architecture/well-architected/" target="_blank" rel="noopener noreferrer">AWS Well-Architected Framework</a></li>
+<li><a href="https://aws.amazon.com/whitepapers/" target="_blank" rel="noopener noreferrer">AWS Whitepapers</a></li>
+<li><a href="https://docs.aws.amazon.com/" target="_blank" rel="noopener noreferrer">AWS Documentation</a></li>
+<li>Official AWS documentation and whitepapers for technical verification</li>
+<li>Independent study notes and original scenario practice patterns</li>
+</ul>
+<hr>
+<h2 id="exam-objective-mapping">Exam Objective Mapping</h2>
+<p>This guide covers all official AWS SAA-C03 exam domains:</p>
+<table>
+<tr><th>Official Domain</th><th>Weight</th></tr>
+<tr><td><strong>Design Secure Architectures</strong></td><td>~30%</td></tr>
+<tr><td><strong>Design Resilient Architectures</strong></td><td>~26%</td></tr>
+<tr><td><strong>Design High-Performing Architectures</strong></td><td>~24%</td></tr>
+<tr><td><strong>Design Cost-Optimized Architectures</strong></td><td>~20%</td></tr>
+</table>
+<hr>
+<blockquote><strong>Table of Contents</strong></blockquote>
+<blockquote>- <a href="#1-most-frequently-tested-services">1. Most Frequently Tested Services</a></blockquote>
+<blockquote>- <a href="#2-most-frequently-tested-domains">2. Most Frequently Tested Domains</a></blockquote>
+<blockquote>- <a href="#3-golden-rules-keyword---answer-mapping">3. Golden Rules: Keyword -> Answer Mapping</a></blockquote>
+<blockquote>- <a href="#4-most-critical-trick-patterns">4. Most Critical Trick Patterns</a></blockquote>
+<blockquote>- <a href="#5-wrong-answer-elimination-patterns">5. Wrong Answer Elimination Patterns</a></blockquote>
+<blockquote>- <a href="#6-quick-review-flashcards">6. Quick Review Flashcards</a></blockquote>
+<blockquote>- <a href="#7-service-comparison-tables">7. Service Comparison Tables</a></blockquote>
+<blockquote>- <a href="#8-high-frequency-confusion-matrix">8. High-Frequency Confusion Matrix</a></blockquote>
+<blockquote>- <a href="#9-critical-gotcha-facts">9. Critical Gotcha Facts</a></blockquote>
+<blockquote>- <a href="#10-route-53-routing-policies">10. Route 53 Routing Policies</a></blockquote>
+<blockquote>- <a href="#11-iam-policy-evaluation--cross-account-access">11. IAM Policy Evaluation & Cross-Account Access</a></blockquote>
+<blockquote>- <a href="#12-well-architected-framework">12. Well-Architected Framework</a></blockquote>
+<blockquote>- <a href="#13-new--recently-added-services">13. New & Recently Added Services</a></blockquote>
+<blockquote>- <a href="#14-common-exam-wording--what-they-mean">14. Common Exam Wording & What They Mean</a></blockquote>
+<blockquote>- <a href="#15-architecture-diagrams">15. Architecture Diagrams</a></blockquote>
+<blockquote>- <a href="#16-scenario-based-questions-with-explanations">16. Scenario-Based Questions with Explanations</a></blockquote>
+<blockquote>- <a href="#17-last-minute-service-reference">17. Last-Minute Service Reference</a></blockquote>
+<blockquote>- <a href="#18-exam-day-strategy">18. Exam Day Strategy</a></blockquote>
+<blockquote>- <a href="#19-last-24-hour-revision-checklist">19. Last 24-Hour Revision Checklist</a></blockquote>
+<hr>
+<h2 id="1-most-frequently-tested-services">1. MOST FREQUENTLY TESTED SERVICES</h2>
+<table>
+<tr><td>Rank</td><td>Service</td><td>Priority</td></tr>
+<tr><td>1</td><td><strong>Amazon S3</strong></td><td>MUST know</td></tr>
+<tr><td>2</td><td><strong>Amazon EC2</strong></td><td>MUST know</td></tr>
+<tr><td>3</td><td><strong>AWS Lambda</strong></td><td>MUST know</td></tr>
+<tr><td>4</td><td><strong>Amazon RDS / Aurora</strong></td><td>MUST know</td></tr>
+<tr><td>5</td><td><strong>Amazon SQS</strong></td><td>MUST know</td></tr>
+<tr><td>6</td><td><strong>Amazon CloudFront</strong></td><td>MUST know</td></tr>
+<tr><td>7</td><td><strong>VPC / Networking</strong></td><td>MUST know</td></tr>
+<tr><td>8</td><td><strong>Amazon DynamoDB</strong></td><td>Very important</td></tr>
+<tr><td>9</td><td><strong>Amazon SNS</strong></td><td>Very important</td></tr>
+<tr><td>10</td><td><strong>ELB (ALB/NLB/GWLB)</strong></td><td>Very important</td></tr>
+<tr><td>11</td><td><strong>Amazon EFS / FSx</strong></td><td>Important</td></tr>
+<tr><td>12</td><td><strong>AWS KMS</strong></td><td>Important</td></tr>
+<tr><td>13</td><td><strong>Amazon Kinesis</strong></td><td>Important</td></tr>
+<tr><td>14</td><td><strong>AWS Config</strong></td><td>Important</td></tr>
+<tr><td>15</td><td><strong>Route 53</strong></td><td>Important</td></tr>
+<tr><td>16</td><td><strong>IAM / STS</strong></td><td>Important</td></tr>
+<tr><td>17</td><td><strong>CloudWatch</strong></td><td>Important</td></tr>
+<tr><td>18</td><td><strong>AWS Backup</strong></td><td>Important</td></tr>
+</table>
+<hr>
+<h2 id="2-most-frequently-tested-domains">2. MOST FREQUENTLY TESTED DOMAINS</h2>
+<table>
+<tr><td>Domain</td><td>Weight</td><td>What to Know</td></tr>
+<tr><td><strong>Storage (S3, EBS, EFS, FSx)</strong></td><td>~25%</td><td>Lifecycle, storage classes, Object Lock, VPC endpoints</td></tr>
+<tr><td><strong>Compute (EC2, Lambda, Fargate)</strong></td><td>~18%</td><td>Purchasing options, Auto Scaling, serverless</td></tr>
+<tr><td><strong>Database (RDS, Aurora, DynamoDB)</strong></td><td>~14%</td><td>Multi-AZ vs Read Replica, Aurora Serverless, PITR</td></tr>
+<tr><td><strong>Decoupling (SQS, SNS, Kinesis)</strong></td><td>~13%</td><td>Fan-out, FIFO, queue-based scaling</td></tr>
+<tr><td><strong>Security (IAM, KMS, WAF, Shield)</strong></td><td>~11%</td><td>Secrets Manager, Object Lock, Shield Advanced</td></tr>
+<tr><td><strong>Networking (VPC, Direct Connect)</strong></td><td>~9%</td><td>VPC endpoints, peering, Security Groups</td></tr>
+<tr><td><strong>Cost Optimization</strong></td><td>~8%</td><td>Spot/RI/Savings Plans, right-size storage</td></tr>
+<tr><td><strong>Migration (DMS, Snowball, DataSync)</strong></td><td>~5%</td><td>Online vs offline migration</td></tr>
+</table>
+<hr>
+<h2 id="3-golden-rules-keyword---answer-mapping">3. GOLDEN RULES: Keyword -> Answer Mapping</h2>
+<p>When you see these keywords in an exam question, the answer is typically:</p>
+<h3 id="storage">STORAGE</h3>
+<table>
+<tr><td>When You See This</td><td>Answer</td></tr>
+<tr><td>"Query logs in S3" + "least overhead"</td><td><strong>Amazon Athena</strong></td></tr>
+<tr><td>"Access S3 without internet" / "private"</td><td><strong>Gateway VPC Endpoint</strong> (free)</td></tr>
+<tr><td>"Reduce S3 transfer cost" (from VPC)</td><td><strong>Gateway VPC Endpoint</strong></td></tr>
+<tr><td>"Unpredictable/changing access pattern"</td><td><strong>S3 Intelligent-Tiering</strong></td></tr>
+<tr><td>"Accessed first 30 days, rarely after"</td><td><strong>S3 Standard -> S3 Standard-IA</strong> (lifecycle)</td></tr>
+<tr><td>"Never accessed after X days, keep forever"</td><td><strong>S3 Lifecycle -> Glacier Deep Archive</strong></td></tr>
+<tr><td>"Nobody can delete, not even root"</td><td><strong>S3 Object Lock - Compliance mode</strong></td></tr>
+<tr><td>"Prevent accidental deletion"</td><td><strong>S3 Versioning + MFA Delete</strong></td></tr>
+<tr><td>"Multiple EC2 instances share files" (Linux)</td><td><strong>Amazon EFS</strong></td></tr>
+<tr><td>"Windows file share / SMB / Active Directory"</td><td><strong>Amazon FSx for Windows File Server</strong></td></tr>
+<tr><td>"HPC / high-throughput file system"</td><td><strong>FSx for Lustre</strong></td></tr>
+<tr><td>"Speed up global large data upload"</td><td><strong>S3 Transfer Acceleration</strong></td></tr>
+<tr><td>"Lowest latency, single AZ, high throughput"</td><td><strong>S3 Express One Zone</strong></td></tr>
+<tr><td>"Backup multiple AWS services centrally"</td><td><strong>AWS Backup</strong></td></tr>
+</table>
+<h3 id="compute">COMPUTE</h3>
+<table>
+<tr><td>When You See This</td><td>Answer</td></tr>
+<tr><td>"Least operational overhead" + containers</td><td><strong>ECS on Fargate</strong></td></tr>
+<tr><td>"Remote access to EC2" + "least overhead"</td><td><strong>Systems Manager Session Manager</strong></td></tr>
+<tr><td>"Patch 1000 EC2 instances" (3rd party)</td><td><strong>Systems Manager Run Command</strong></td></tr>
+<tr><td>"Interruptible, stateless workload"</td><td><strong>Spot Instances</strong></td></tr>
+<tr><td>"24/7 steady-state production"</td><td><strong>Reserved Instances / Savings Plans</strong></td></tr>
+<tr><td>"Guaranteed capacity in specific AZs, short-term"</td><td><strong>On-Demand Capacity Reservation</strong></td></tr>
+<tr><td>"Lambda cold start problem"</td><td><strong>Provisioned Concurrency</strong> or <strong>SnapStart</strong></td></tr>
+<tr><td>"Kubernetes on AWS, managed control plane"</td><td><strong>Amazon EKS</strong></td></tr>
+</table>
+<h3 id="database">DATABASE</h3>
+<table>
+<tr><td>When You See This</td><td>Answer</td></tr>
+<tr><td>"Credential/password rotation" + "automatic"</td><td><strong>AWS Secrets Manager</strong></td></tr>
+<tr><td>"Read-heavy DB workload"</td><td><strong>Read Replicas</strong> (Aurora Replicas)</td></tr>
+<tr><td>"MySQL auto-scale reads + HA"</td><td><strong>Aurora + Multi-AZ + Aurora Auto Scaling</strong></td></tr>
+<tr><td>"Too many DB connections / Lambda timeout"</td><td><strong>RDS Proxy</strong></td></tr>
+<tr><td>"RPO 15 minutes, DynamoDB"</td><td><strong>DynamoDB Point-in-Time Recovery</strong></td></tr>
+<tr><td>"Unpredictable/variable DB traffic"</td><td><strong>Aurora Serverless</strong> or <strong>DynamoDB On-Demand</strong></td></tr>
+<tr><td>"Clone production DB for testing"</td><td><strong>Aurora Cloning</strong></td></tr>
+<tr><td>"Slow EBS inserts" / "storage performance"</td><td><strong>Provisioned IOPS SSD (io1/io2)</strong></td></tr>
+<tr><td>"In-memory cache for DynamoDB"</td><td><strong>DAX (DynamoDB Accelerator)</strong></td></tr>
+</table>
+<h3 id="decoupling--messaging">DECOUPLING / MESSAGING</h3>
+<table>
+<tr><td>When You See This</td><td>Answer</td></tr>
+<tr><td>"Message ordering matters"</td><td><strong>SQS FIFO</strong></td></tr>
+<tr><td>"1 message -> many consumers (fan-out)"</td><td><strong>SNS -> multiple SQS queues</strong></td></tr>
+<tr><td>"Decouple + Auto Scale workers"</td><td><strong>SQS + ASG (scale on queue depth)</strong></td></tr>
+<tr><td>"ActiveMQ/RabbitMQ migration"</td><td><strong>Amazon MQ</strong></td></tr>
+<tr><td>"Real-time streaming data"</td><td><strong>Kinesis Data Streams</strong></td></tr>
+<tr><td>"Duplicate processing from SQS"</td><td><strong>Increase visibility timeout</strong></td></tr>
+</table>
+<h3 id="security">SECURITY</h3>
+<table>
+<tr><td>When You See This</td><td>Answer</td></tr>
+<tr><td>"Large-scale DDoS protection"</td><td><strong>AWS Shield Advanced</strong></td></tr>
+<tr><td>"SQL injection / XSS protection"</td><td><strong>AWS WAF</strong></td></tr>
+<tr><td>"Traffic inspection/filtering inside VPC"</td><td><strong>AWS Network Firewall</strong></td></tr>
+<tr><td>"3rd party virtual appliance"</td><td><strong>Gateway Load Balancer (GWLB)</strong></td></tr>
+<tr><td>"Track configuration changes"</td><td><strong>AWS Config</strong></td></tr>
+<tr><td>"Audit API calls"</td><td><strong>AWS CloudTrail</strong></td></tr>
+<tr><td>"Detect PII in S3"</td><td><strong>Amazon Macie</strong></td></tr>
+<tr><td>"Restrict services org-wide"</td><td><strong>SCP (Service Control Policy)</strong></td></tr>
+<tr><td>"Centralize multi-account logging"</td><td><strong>CloudTrail organization trail -> S3</strong></td></tr>
+<tr><td>"Anomalous activity detection"</td><td><strong>GuardDuty</strong></td></tr>
+<tr><td>"EC2 vulnerability scanning"</td><td><strong>Inspector</strong></td></tr>
+</table>
+<h3 id="networking">NETWORKING</h3>
+<table>
+<tr><td>When You See This</td><td>Answer</td></tr>
+<tr><td>"On-prem -> AWS, low latency, permanent"</td><td><strong>AWS Direct Connect</strong></td></tr>
+<tr><td>"Direct Connect + cheap backup"</td><td><strong>Direct Connect (primary) + VPN (backup)</strong></td></tr>
+<tr><td>"UDP traffic + global + low latency"</td><td><strong>NLB + Global Accelerator</strong></td></tr>
+<tr><td>"Static website + global acceleration"</td><td><strong>S3 + CloudFront</strong></td></tr>
+<tr><td>"HTTP -> HTTPS redirect"</td><td><strong>ALB listener rule (redirect)</strong></td></tr>
+<tr><td>"Multiple VPCs + on-prem hub"</td><td><strong>Transit Gateway</strong></td></tr>
+<tr><td>"Simple VPC-to-VPC connection"</td><td><strong>VPC Peering</strong></td></tr>
+<tr><td>"Private access to AWS services"</td><td><strong>VPC Endpoint (Gateway or Interface)</strong></td></tr>
+</table>
+<h3 id="route-53">ROUTE 53</h3>
+<table>
+<tr><td>When You See This</td><td>Answer</td></tr>
+<tr><td>"Route to healthy endpoint"</td><td><strong>Failover routing</strong> (active-passive) or <strong>Multi-value answer</strong> (multiple healthy IPs)</td></tr>
+<tr><td>"Split traffic by weight (A/B test)"</td><td><strong>Weighted routing</strong></td></tr>
+<tr><td>"Route to lowest latency region"</td><td><strong>Latency-based routing</strong></td></tr>
+<tr><td>"Active-passive failover"</td><td><strong>Failover routing</strong></td></tr>
+<tr><td>"Route by user location (country/continent)"</td><td><strong>Geolocation routing</strong></td></tr>
+<tr><td>"Route by user location (GPS proximity)"</td><td><strong>Geoproximity routing</strong></td></tr>
+<tr><td>"Return multiple IPs, client picks"</td><td><strong>Multi-value answer routing</strong></td></tr>
+</table>
+<h3 id="cost">COST</h3>
+<table>
+<tr><td>When You See This</td><td>Answer</td></tr>
+<tr><td>"Cost analysis graph"</td><td><strong>Cost Explorer</strong></td></tr>
+<tr><td>"Find untagged resources"</td><td><strong>AWS Config rules</strong></td></tr>
+<tr><td>"RDS not in use, reduce cost"</td><td><strong>Snapshot, terminate, restore when needed</strong></td></tr>
+<tr><td>"Set budget alerts"</td><td><strong>AWS Budgets</strong></td></tr>
+<tr><td>"Cost anomaly detection"</td><td><strong>AWS Cost Anomaly Detection</strong></td></tr>
+</table>
+<hr>
+<h2 id="4-most-critical-trick-patterns">4. MOST CRITICAL TRICK PATTERNS</h2>
+<h3 id="1-least-operational-overhead--choose-serverless">1. "Least Operational Overhead" = CHOOSE SERVERLESS</h3>
+<ul>
+<li>Athena > EMR</li>
+<li>Fargate > EC2</li>
+<li>Secrets Manager > custom Lambda rotation</li>
+<li>Aurora Serverless > manual scaling</li>
+</ul>
+<h3 id="2-config-vs-cloudtrail">2. Config vs CloudTrail</h3>
+<ul>
+<li><strong>Config</strong> = resource configuration STATE (what changed?)</li>
+<li><strong>CloudTrail</strong> = API call RECORD (who did what?)</li>
+</ul>
+<h3 id="3-gateway-vpc-endpoint-is-free">3. Gateway VPC Endpoint is FREE</h3>
+<ul>
+<li>Gateway endpoint for S3 and DynamoDB = free</li>
+<li>Interface endpoint for other services = costs money</li>
+</ul>
+<h3 id="4-object-lock-modes">4. Object Lock Modes</h3>
+<ul>
+<li><strong>Compliance</strong> = NOBODY can delete (including root)</li>
+<li><strong>Governance</strong> = specially permissioned users can override</li>
+</ul>
+<h3 id="5-multi-az-vs-read-replica">5. Multi-AZ vs Read Replica</h3>
+<ul>
+<li><strong>Multi-AZ</strong> = High availability (failover), does NOT improve read performance</li>
+<li><strong>Read Replica</strong> = Read performance, NO failover (except Aurora)</li>
+</ul>
+<h3 id="6-sns-vs-sqs">6. SNS vs SQS</h3>
+<ul>
+<li>1 producer -> 1 consumer + buffering = <strong>SQS</strong></li>
+<li>1 producer -> N consumers = <strong>SNS -> N SQS</strong> (fan-out)</li>
+<li>Ordering required = <strong>SQS FIFO</strong></li>
+</ul>
+<h3 id="7-alb-vs-nlb">7. ALB vs NLB</h3>
+<ul>
+<li>HTTP/HTTPS, path-based routing, L7 = <strong>ALB</strong></li>
+<li>TCP/UDP, static IP, extreme performance = <strong>NLB</strong></li>
+<li>If you see UDP, ALB is automatically wrong</li>
+</ul>
+<h3 id="8-shield-vs-shield-advanced-vs-waf">8. Shield vs Shield Advanced vs WAF</h3>
+<ul>
+<li>Free basic DDoS = <strong>Shield Standard</strong> (enabled by default)</li>
+<li>Advanced DDoS + cost protection + 24/7 support = <strong>Shield Advanced</strong></li>
+<li>Application layer rules (SQL injection) = <strong>WAF</strong></li>
+</ul>
+<h3 id="9-secrets-manager-vs-parameter-store">9. Secrets Manager vs Parameter Store</h3>
+<ul>
+<li>Automatic credential rotation = <strong>Secrets Manager</strong></li>
+<li>Cheap, simple config storage = <strong>Parameter Store</strong></li>
+</ul>
+<h3 id="10-s3-storage-class-transition-order">10. S3 Storage Class Transition Order</h3>
+<pre><code>Standard -&gt; Standard-IA (min 30 days) -&gt; Glacier Flexible -&gt; Glacier Deep Archive
+         -&gt; Intelligent-Tiering (if pattern is unknown)
+         -&gt; One Zone-IA (single AZ sufficient, cheaper)</code></pre>
+<p>Lifecycle rules can transition directly to a later storage class; the arrows show common cost tiers, not a mandatory sequence.</p>
+<h3 id="11-cloudfront-oac-vs-oai">11. CloudFront OAC vs OAI</h3>
+<ul>
+<li><strong>OAI</strong> = legacy, S3 origin only</li>
+<li><strong>OAC</strong> = new, supports S3 bucket origins, recommended over OAI</li>
+</ul>
+<h3 id="12-iam-policy-evaluation-order">12. IAM Policy Evaluation Order</h3>
+<ul>
+<li><strong>Explicit DENY</strong> always wins</li>
+<li><strong>Explicit ALLOW</strong></li>
+<li><strong>Implicit DENY</strong> (default)</li>
+</ul>
+<h3 id="13-route-53-health-checks">13. Route 53 Health Checks</h3>
+<ul>
+<li>Failover routing REQUIRES health checks</li>
+<li>Health checks can be used with most routing policies</li>
+</ul>
+<hr>
+<h2 id="5-wrong-answer-elimination-patterns">5. WRONG ANSWER ELIMINATION PATTERNS</h2>
+<ul>
+<li><strong>Over-Engineering trap</strong>: If a simple managed service solves it, options with EC2 + custom scripts are wrong</li>
+<li><strong>Protocol mismatch</strong>: UDP = ALB is wrong, SMB = EFS is wrong, NFS = FSx Windows is wrong</li>
+<li><strong>"Must not traverse internet"</strong>: Any option using public internet is eliminated</li>
+<li><strong>"Highly available"</strong>: Any single-AZ solution is eliminated</li>
+<li><strong>"Immediate access"</strong>: Glacier Flexible Retrieval and Deep Archive are eliminated (minutes to hours); Glacier Instant Retrieval still offers millisecond access</li>
+<li><strong>Cost question</strong>: Expensive over-provisioned options are eliminated</li>
+<li><strong>"Most secure"</strong>: Options with public access or open security groups are eliminated</li>
+<li><strong>Cross-account access</strong>: Direct IAM user sharing is wrong — use IAM Roles + STS AssumeRole</li>
+</ul>
+<hr>
+<h2 id="6-quick-review-flashcards">6. QUICK REVIEW FLASHCARDS</h2>
+<table>
+<tr><td>#</td><td>Question</td><td>Correct</td><td>Wrong Trap</td></tr>
+<tr><td>1</td><td>S3 private access</td><td>VPC Gateway Endpoint</td><td>NAT Gateway</td></tr>
+<tr><td>2</td><td>Credential rotation</td><td>Secrets Manager</td><td>Parameter Store</td></tr>
+<tr><td>3</td><td>Config tracking</td><td>AWS Config</td><td>CloudTrail</td></tr>
+<tr><td>4</td><td>API call audit</td><td>CloudTrail</td><td>Config</td></tr>
+<tr><td>5</td><td>DDoS protection</td><td>Shield Advanced</td><td>GuardDuty</td></tr>
+<tr><td>6</td><td>Traffic inspection</td><td>Network Firewall</td><td>GuardDuty</td></tr>
+<tr><td>7</td><td>3rd party appliance</td><td>Gateway LB</td><td>Network LB</td></tr>
+<tr><td>8</td><td>Fan-out messaging</td><td>SNS -> SQS</td><td>SQS alone</td></tr>
+<tr><td>9</td><td>Shared file (Linux)</td><td>EFS</td><td>EBS Multi-Attach</td></tr>
+<tr><td>10</td><td>Shared file (Windows)</td><td>FSx Windows</td><td>EFS</td></tr>
+</table>
+<hr>
+<h2 id="7-service-comparison-tables">7. SERVICE COMPARISON TABLES</h2>
+<h3 id="compute">Compute</h3>
+<table>
+<tr><td>Scenario</td><td>Use This</td><td>Not This</td></tr>
+<tr><td>Interruptible, fault-tolerant batch jobs</td><td><strong>Spot Instances</strong></td><td>On-Demand</td></tr>
+<tr><td>Steady 24/7 baseline</td><td><strong>Reserved / Savings Plans</strong></td><td>Spot</td></tr>
+<tr><td>Short-term unpredictable</td><td><strong>On-Demand</strong></td><td>Reserved</td></tr>
+<tr><td>Flexibility across instance families</td><td><strong>Compute Savings Plans</strong></td><td>EC2 Reserved</td></tr>
+<tr><td>Containers without managing infra</td><td><strong>ECS on Fargate</strong></td><td>ECS on EC2</td></tr>
+<tr><td>Windows licensing / dedicated hardware</td><td><strong>Dedicated Hosts</strong></td><td>Dedicated Instances</td></tr>
+<tr><td>Managed Kubernetes</td><td><strong>EKS</strong></td><td>Self-managed K8s on EC2</td></tr>
+</table>
+<h3 id="database">Database</h3>
+<table>
+<tr><td>Scenario</td><td>Use This</td><td>Not This</td></tr>
+<tr><td>HA/failover (sync replication)</td><td><strong>Multi-AZ</strong></td><td>Read Replicas</td></tr>
+<tr><td>Read scaling (async replication)</td><td><strong>Read Replicas</strong></td><td>Multi-AZ</td></tr>
+<tr><td>Auto-scaling replicas, global DBs</td><td><strong>Aurora</strong></td><td>Standard RDS</td></tr>
+<tr><td>Sporadic/unpredictable DB traffic</td><td><strong>Aurora Serverless</strong></td><td>Aurora Provisioned</td></tr>
+<tr><td>OS-level access (Oracle/SQL Server)</td><td><strong>RDS Custom</strong></td><td>Standard RDS</td></tr>
+<tr><td>Lambda hammering DB connections</td><td><strong>RDS Proxy</strong></td><td>Direct connection</td></tr>
+<tr><td>Sub-ms DynamoDB reads</td><td><strong>DAX</strong></td><td>ElastiCache</td></tr>
+</table>
+<h3 id="storage">Storage</h3>
+<table>
+<tr><td>Scenario</td><td>Use This</td><td>Not This</td></tr>
+<tr><td>Frequent access</td><td><strong>S3 Standard</strong></td><td>S3-IA</td></tr>
+<tr><td>Infrequent but immediate retrieval</td><td><strong>S3 Standard-IA</strong></td><td>Glacier</td></tr>
+<tr><td>Unknown/changing access patterns</td><td><strong>S3 Intelligent-Tiering</strong></td><td>Manual lifecycle</td></tr>
+<tr><td>Archive (minutes-to-hours retrieval OK)</td><td><strong>S3 Glacier Flexible</strong></td><td>Standard-IA</td></tr>
+<tr><td>Archive (12-hour retrieval OK, cheapest)</td><td><strong>Glacier Deep Archive</strong></td><td>Glacier Flexible</td></tr>
+<tr><td>Ultra-low latency, single AZ</td><td><strong>S3 Express One Zone</strong></td><td>S3 Standard</td></tr>
+</table>
+<h3 id="networking">Networking</h3>
+<table>
+<tr><td>Scenario</td><td>Use This</td><td>Not This</td></tr>
+<tr><td>HTTP/HTTPS, path routing, L7</td><td><strong>ALB</strong></td><td>NLB</td></tr>
+<tr><td>TCP/UDP, extreme performance, static IPs, L4</td><td><strong>NLB</strong></td><td>ALB</td></tr>
+<tr><td>Content caching at edge</td><td><strong>CloudFront</strong></td><td>Global Accelerator</td></tr>
+<tr><td>TCP/UDP optimization, static IPs, no caching</td><td><strong>Global Accelerator</strong></td><td>CloudFront</td></tr>
+<tr><td>Private access to S3/DynamoDB (free)</td><td><strong>Gateway VPC Endpoint</strong></td><td>Interface Endpoint</td></tr>
+<tr><td>Private access to other services</td><td><strong>Interface VPC Endpoint</strong></td><td>Gateway Endpoint</td></tr>
+<tr><td>Many VPCs + on-prem connectivity</td><td><strong>Transit Gateway</strong></td><td>VPC Peering mesh</td></tr>
+</table>
+<h3 id="messaging">Messaging</h3>
+<table>
+<tr><td>Scenario</td><td>Use This</td><td>Not This</td></tr>
+<tr><td>Point-to-point decoupling/buffering</td><td><strong>SQS</strong></td><td>SNS</td></tr>
+<tr><td>Fan-out to multiple subscribers</td><td><strong>SNS -> SQS</strong></td><td>SQS alone</td></tr>
+<tr><td>Strict ordering + exactly-once</td><td><strong>SQS FIFO</strong></td><td>SQS Standard</td></tr>
+<tr><td>Higher throughput, best-effort ordering</td><td><strong>SQS Standard</strong></td><td>SQS FIFO</td></tr>
+</table>
+<h3 id="caching">Caching</h3>
+<table>
+<tr><td>Scenario</td><td>Use This</td><td>Not This</td></tr>
+<tr><td>Persistence, replication, sessions</td><td><strong>ElastiCache Redis</strong></td><td>Memcached</td></tr>
+<tr><td>Simple key-value, multi-threaded</td><td><strong>ElastiCache Memcached</strong></td><td>Redis</td></tr>
+<tr><td>DynamoDB sub-ms cache</td><td><strong>DAX</strong></td><td>ElastiCache</td></tr>
+</table>
+<h3 id="security">Security</h3>
+<table>
+<tr><td>Scenario</td><td>Use This</td><td>Not This</td></tr>
+<tr><td>Free basic DDoS protection</td><td><strong>Shield Standard</strong></td><td>Shield Advanced</td></tr>
+<tr><td>Enhanced DDoS + cost protection + 24/7 SRT</td><td><strong>Shield Advanced</strong></td><td>Shield Standard</td></tr>
+<tr><td>Resource config tracking/compliance</td><td><strong>AWS Config</strong></td><td>CloudTrail</td></tr>
+<tr><td>API call logging/auditing</td><td><strong>CloudTrail</strong></td><td>Config</td></tr>
+<tr><td>Nobody can delete (not even root)</td><td><strong>Object Lock Compliance</strong></td><td>Governance mode</td></tr>
+<tr><td>Admins can override delete</td><td><strong>Object Lock Governance</strong></td><td>Compliance mode</td></tr>
+<tr><td>Threat detection (anomalous behavior)</td><td><strong>GuardDuty</strong></td><td>Inspector</td></tr>
+<tr><td>Vulnerability scanning (EC2/containers)</td><td><strong>Inspector</strong></td><td>GuardDuty</td></tr>
+</table>
+<hr>
+<h2 id="8-high-frequency-confusion-matrix">8. HIGH-FREQUENCY CONFUSION MATRIX</h2>
+<p>The most commonly confused service pairs on the exam:</p>
+<table>
+<tr><td>Confusion Pair</td><td>Service A</td><td>Service B</td><td>How to Tell</td></tr>
+<tr><td><strong>Config vs CloudTrail</strong></td><td>Tracks resource <strong>configuration changes</strong></td><td>Tracks <strong>API calls</strong> (who did what)</td><td>"What changed?" = Config. "Who called it?" = CloudTrail</td></tr>
+<tr><td><strong>SQS vs SNS</strong></td><td><strong>Queue</strong> (pull-based, 1 consumer)</td><td><strong>Topic</strong> (push-based, many consumers)</td><td>Buffering = SQS. Broadcasting = SNS</td></tr>
+<tr><td><strong>Aurora vs RDS</strong></td><td>Auto-scaling storage, faster replicas, global DB</td><td>Traditional managed DB</td><td>"Auto-scale storage" or "fastest failover" = Aurora</td></tr>
+<tr><td><strong>Shield vs WAF</strong></td><td><strong>DDoS</strong> protection (L3/L4)</td><td><strong>Application</strong> rules (L7: SQLi, XSS)</td><td>DDoS = Shield. SQL injection = WAF</td></tr>
+<tr><td><strong>EFS vs FSx</strong></td><td>Linux, NFS, POSIX</td><td>Windows (SMB) or Lustre (HPC) or ONTAP (NetApp)</td><td>Linux shared files = EFS. Windows = FSx</td></tr>
+<tr><td><strong>GuardDuty vs Inspector</strong></td><td><strong>Threat detection</strong> (anomalous behavior)</td><td><strong>Vulnerability scanning</strong> (EC2, containers)</td><td>"Suspicious activity" = GuardDuty. "CVE/open ports" = Inspector</td></tr>
+<tr><td><strong>ALB vs NLB</strong></td><td>Layer 7 (HTTP/HTTPS), path-based</td><td>Layer 4 (TCP/UDP), static IP</td><td>HTTP/path = ALB. TCP/UDP/static IP = NLB</td></tr>
+<tr><td><strong>CloudFront vs Global Accelerator</strong></td><td><strong>Caches</strong> content at edge</td><td><strong>Optimizes</strong> TCP/UDP routing (no cache)</td><td>Static content = CloudFront. Dynamic TCP/UDP = GA</td></tr>
+<tr><td><strong>Secrets Manager vs Parameter Store</strong></td><td>Auto <strong>rotation</strong>, costs more</td><td>Simple config, <strong>cheaper</strong>, no auto rotation</td><td>"Rotate" = Secrets Manager. "Store config" = Parameter Store</td></tr>
+<tr><td><strong>Kinesis vs SQS</strong></td><td><strong>Real-time streaming</strong>, multiple shards, replay</td><td><strong>Queue</strong>, message processing, decoupling</td><td>"Streaming/analytics" = Kinesis. "Decouple workers" = SQS</td></tr>
+<tr><td><strong>NACL vs Security Group</strong></td><td><strong>Stateless</strong>, subnet-level, allow + deny</td><td><strong>Stateful</strong>, instance-level, allow only</td><td>Subnet rules = NACL. Instance rules = SG</td></tr>
+<tr><td><strong>Gateway vs Interface Endpoint</strong></td><td><strong>Free</strong>, S3/DynamoDB only</td><td><strong>Costs money</strong>, any service</td><td>S3/DynamoDB = Gateway. Others = Interface</td></tr>
+</table>
+<hr>
+<h2 id="9-critical-gotcha-facts">9. CRITICAL GOTCHA FACTS</h2>
+<h3 id="s3">S3</h3>
+<ul>
+<li>Intelligent-Tiering has <strong>no retrieval fees</strong> (unlike Standard-IA)</li>
+<li>Transfer Acceleration uses CloudFront edge locations (50-500% speed improvement)</li>
+<li><code>aws:PrincipalOrgID</code> condition key grants S3 access to the entire Organization</li>
+<li>S3 Object Lambda transforms data on-the-fly without storing copies</li>
+<li>S3 Event Notifications can trigger Lambda, SQS, SNS</li>
+<li>S3 Cross-Region Replication requires <strong>Versioning enabled</strong> on both buckets</li>
+<li>S3 Lifecycle minimum storage duration: Standard-IA = 30 days, Glacier = 90 days, Deep Archive = 180 days</li>
+</ul>
+<h3 id="compute">Compute</h3>
+<ul>
+<li>Lambda payload limits = <strong>6 MB synchronous / 1 MB asynchronous</strong> (use S3 for larger payloads)</li>
+<li><strong>Spread placement group</strong> = different hardware (HA); <strong>Cluster</strong> = same hardware (low latency)</li>
+<li>Lambda SnapStart = caches initialized state to reduce cold starts for supported runtimes such as Java</li>
+<li>Lambda max execution time = <strong>15 minutes</strong></li>
+<li>Lambda concurrency limit = 1000 per region (can be increased)</li>
+</ul>
+<h3 id="database">Database</h3>
+<ul>
+<li>RDS automated backup retention max = <strong>35 days</strong> (use AWS Backup for longer)</li>
+<li>Aurora replicas have <strong>minimal replication lag</strong></li>
+<li>Multi-AZ RDS = RPO < 1 second (synchronous replication)</li>
+<li>Aurora Global Database = cross-region, RPO < 1 second, failover < 1 minute</li>
+<li>DynamoDB <strong>TTL</strong> = automatically delete expired items (no write capacity consumed)</li>
+</ul>
+<h3 id="networking">Networking</h3>
+<ul>
+<li>Gateway VPC endpoints are <strong>free</strong>; Interface VPC endpoints <strong>cost money</strong></li>
+<li>VPC peering: works cross-account/cross-region, but CIDRs <strong>must NOT overlap</strong></li>
+<li>NACLs are <strong>stateless</strong> (need inbound AND outbound rules); Security Groups are <strong>stateful</strong></li>
+<li>Transit Gateway supports <strong>transitive routing</strong> (VPC peering does NOT)</li>
+<li><strong>Session Manager</strong> = no SSH needed (preferred over bastion host)</li>
+</ul>
+<h3 id="ebs">EBS</h3>
+<ul>
+<li><strong>io2</strong> supports Multi-Attach (Nitro instances, same AZ only)</li>
+<li><strong>gp3</strong> allows independent IOPS provisioning</li>
+<li>EBS snapshots are <strong>incremental</strong></li>
+<li>EBS volumes are <strong>AZ-specific</strong></li>
+</ul>
+<h3 id="cloudfront">CloudFront</h3>
+<ul>
+<li><strong>Invalidation</strong> = force refresh cached objects (costs money)</li>
+<li><strong>Lambda@Edge</strong> = run Lambda at edge (heavier, more use cases)</li>
+<li><strong>CloudFront Functions</strong> = lightweight viewer-level JS at edge (faster; headers, URL rewrites, redirects)</li>
+</ul>
+<h3 id="aws-backup">AWS Backup</h3>
+<ul>
+<li>Centralized backup across S3, EBS, RDS, DynamoDB, EFS, FSx, Storage Gateway</li>
+<li>Cross-region and cross-account backup copy</li>
+</ul>
+<hr>
+<h2 id="10-route-53-routing-policies">10. ROUTE 53 ROUTING POLICIES</h2>
+<table>
+<tr><td>Policy</td><td>Use Case</td><td>Health Check</td><td>Example</td></tr>
+<tr><td><strong>Simple</strong></td><td>Single resource, basic DNS</td><td>Optional</td><td>One web server</td></tr>
+<tr><td><strong>Weighted</strong></td><td>Traffic splitting, A/B testing</td><td>Yes</td><td>80% v1, 20% v2</td></tr>
+<tr><td><strong>Latency-based</strong></td><td>Route to lowest latency region</td><td>Yes</td><td>US user -> us-east-1</td></tr>
+<tr><td><strong>Failover</strong></td><td>Active-passive DR</td><td>Required</td><td>Primary + standby</td></tr>
+<tr><td><strong>Geolocation</strong></td><td>Route by country/continent</td><td>Yes</td><td>EU users -> EU endpoint</td></tr>
+<tr><td><strong>Geoproximity</strong></td><td>Route by GPS proximity, bias</td><td>Yes</td><td>Shift traffic gradually</td></tr>
+<tr><td><strong>Multi-value answer</strong></td><td>Return multiple IPs, client picks</td><td>Yes</td><td>Load distribution without ALB</td></tr>
+</table>
+<p><strong>Key exam traps:</strong></p>
+<ul>
+<li>Latency-based = performance, Geolocation = compliance/legal</li>
+<li>Failover requires health check on primary</li>
+<li>Weighted can send 0% to one resource (blue-green deployment)</li>
+</ul>
+<hr>
+<h2 id="11-iam-policy-evaluation--cross-account-access">11. IAM POLICY EVALUATION & CROSS-ACCOUNT ACCESS</h2>
+<h3 id="policy-evaluation-logic">Policy Evaluation Logic</h3>
+<pre><code>1. Explicit DENY in ANY policy -&gt; DENIED (always wins)
+2. Explicit ALLOW in ANY policy -&gt; ALLOWED
+3. No explicit ALLOW -&gt; DENIED (implicit deny)</code></pre>
+<h3 id="policy-types-in-evaluation-order">Policy Types (in evaluation order)</h3>
+<ul>
+<li><strong>SCP</strong> — sets org-wide maximum permissions</li>
+<li><strong>Resource-based policy</strong> — attached to the resource (S3 bucket policy)</li>
+<li><strong>Identity-based policy</strong> — attached to IAM user/role/group</li>
+<li><strong>Permissions boundary</strong> — maximum permissions a role/user can have</li>
+<li><strong>Session policy</strong> — max permissions for assumed role session</li>
+</ul>
+<h3 id="cross-account-access-pattern">Cross-Account Access Pattern</h3>
+<pre><code>Account A user -&gt; AssumeRole -&gt; Account B role -&gt; Access Account B resources</code></pre>
+<ul>
+<li>Account B creates a role with <strong>trust policy</strong> allowing Account A</li>
+<li>Account A user calls <code>sts:AssumeRole</code> for temporary credentials</li>
+<li><strong>Never share IAM users across accounts</strong> — always use roles</li>
+</ul>
+<hr>
+<h2 id="12-well-architected-framework">12. WELL-ARCHITECTED FRAMEWORK</h2>
+<table>
+<tr><td>Pillar</td><td>Key Focus</td><td>Exam Keywords</td></tr>
+<tr><td><strong>Operational Excellence</strong></td><td>Run & monitor, automate changes</td><td>Runbooks, automation, frequent small changes</td></tr>
+<tr><td><strong>Security</strong></td><td>Protect data & systems</td><td>Least privilege, encryption, traceability</td></tr>
+<tr><td><strong>Reliability</strong></td><td>Recover from failures, scale</td><td>Multi-AZ, auto-recovery, backup/restore</td></tr>
+<tr><td><strong>Performance Efficiency</strong></td><td>Use resources efficiently</td><td>Right-size, serverless, global deployment</td></tr>
+<tr><td><strong>Cost Optimization</strong></td><td>Avoid unnecessary costs</td><td>Right-size, Spot/RI, managed services</td></tr>
+<tr><td><strong>Sustainability</strong></td><td>Minimize environmental impact</td><td>Maximize utilization, managed services</td></tr>
+</table>
+<hr>
+<h2 id="13-new--recently-added-services">13. NEW & RECENTLY ADDED SERVICES</h2>
+<table>
+<tr><td>Service</td><td>What It Does</td><td>Exam Trigger</td></tr>
+<tr><td><strong>S3 Express One Zone</strong></td><td>Single-AZ S3, 10x faster</td><td>"lowest latency", "ML training data"</td></tr>
+<tr><td><strong>Lambda SnapStart</strong></td><td>Cache Lambda init state</td><td>"Java Lambda cold start"</td></tr>
+<tr><td><strong>VPC Lattice</strong></td><td>Service-to-service connectivity</td><td>"simplify microservice connectivity"</td></tr>
+<tr><td><strong>EKS Auto Mode</strong></td><td>Fully managed EKS</td><td>"Managed Kubernetes, least overhead"</td></tr>
+<tr><td><strong>FSx for NetApp ONTAP</strong></td><td>NetApp-compatible file storage</td><td>"NetApp migration", "ONTAP"</td></tr>
+<tr><td><strong>AWS Backup</strong></td><td>Centralized backup</td><td>"centralized backup policy"</td></tr>
+<tr><td><strong>IAM Identity Center</strong></td><td>SSO for AWS accounts</td><td>"centralized login", "SSO"</td></tr>
+<tr><td><strong>CloudFront Functions</strong></td><td>Lightweight JS at edge</td><td>"header manipulation", "faster than Lambda@Edge"</td></tr>
+</table>
+<hr>
+<h2 id="14-common-exam-wording--what-they-mean">14. COMMON EXAM WORDING & WHAT THEY MEAN</h2>
+<p>AWS uses specific words to signal what they want. Here is what they typically mean:</p>
+<table>
+<tr><td>Wording</td><td>What It Signals</td><td>Typical Answer Direction</td></tr>
+<tr><td><strong>least operational overhead</strong></td><td>Choose managed/serverless</td><td>Fargate, Lambda, Aurora Serverless, Athena</td></tr>
+<tr><td><strong>most cost-effective</strong></td><td>Minimize cost while meeting requirements</td><td>Spot, RI, Savings Plans, right-size, lifecycle</td></tr>
+<tr><td><strong>most secure</strong></td><td>Prioritize security over cost/complexity</td><td>Private endpoints, encryption, least privilege</td></tr>
+<tr><td><strong>highly available</strong></td><td>Must survive AZ failure</td><td>Multi-AZ, multiple AZs, auto-recovery</td></tr>
+<tr><td><strong>durable</strong></td><td>Data must not be lost</td><td>S3 (11 9s), EBS snapshots, backups</td></tr>
+<tr><td><strong>scalable</strong></td><td>Handle growing load</td><td>Auto Scaling, serverless, DynamoDB, Aurora</td></tr>
+<tr><td><strong>decouple</strong></td><td>Break dependencies between components</td><td>SQS, SNS, EventBridge</td></tr>
+<tr><td><strong>near real-time</strong></td><td>Seconds to minutes latency</td><td>Kinesis, DynamoDB Streams, Lambda</td></tr>
+<tr><td><strong>fault-tolerant</strong></td><td>System continues on failure</td><td>Multi-AZ, Read Replicas, ASG across AZs</td></tr>
+<tr><td><strong>disaster recovery</strong></td><td>Region-level failure</td><td>Cross-region replication, Pilot Light, Warm Standby</td></tr>
+<tr><td><strong>least change to existing</strong></td><td>Minimal refactoring</td><td>Lift-and-shift, RDS Custom, EC2</td></tr>
+<tr><td><strong>managed service</strong></td><td>AWS handles operations</td><td>RDS, Fargate, Lambda, Aurora</td></tr>
+</table>
+<hr>
+<h2 id="15-architecture-diagrams">15. ARCHITECTURE DIAGRAMS</h2>
+<h3 id="multi-tier-web-application-ha">Multi-Tier Web Application (HA)</h3>
+<pre><code>                    Internet
+                       |
+                  [CloudFront]
+                       |
+                  [ALB - Public Subnets]
+                  /          \
+         [ASG - Web]      [ASG - Web]  (Private Subnets, 2 AZs)
+                  \          /
+                  [ALB - Private Subnets]
+                  /          \
+         [ASG - API]      [ASG - API]  (Private Subnets, 2 AZs)
+                  \          /
+              [RDS Multi-AZ]  (Private Subnets, 2 AZs)</code></pre>
+<h3 id="s3--cloudfront-static-website">S3 + CloudFront (Static Website)</h3>
+<pre><code>    Users -&gt; [CloudFront Edge Locations (global cache)]
+                    |
+              [S3 Bucket (origin)]
+                    |
+        [OAC - restricts direct S3 access]</code></pre>
+<h3 id="sns---sqs-fan-out">SNS -> SQS Fan-Out</h3>
+<pre><code>              [Publisher]
+                  |
+              [SNS Topic]
+             /    |    \
+            /     |     \
+      [SQS Q1] [SQS Q2] [SQS Q3]
+         |        |        |
+      [Lambda]  [EC2]   [Lambda]</code></pre>
+<h3 id="direct-connect--vpn-backup">Direct Connect + VPN Backup</h3>
+<pre><code>  On-Premises
+      |
+   [DX] ========== AWS Direct Connect (primary, 1/10/100 Gbps)
+      |                    |
+      |              [Virtual Gateway]
+      |                    |
+      +---[Site-to-Site VPN] (backup, over internet, max 1.25 Gbps)</code></pre>
+<hr>
+<h2 id="16-scenario-based-questions-with-explanations">16. SCENARIO-BASED QUESTIONS WITH EXPLANATIONS</h2>
+<h3 id="scenario-1-multi-tier-web-app">Scenario 1: Multi-Tier Web App</h3>
+<p><strong>Question</strong>: A company needs a highly available web application with auto-scaling. The database must survive an AZ failure. What is the MOST cost-effective architecture?</p>
+<p><strong>Thinking key</strong>: "highly available" = multi-AZ everywhere. "most cost-effective" = don't over-provision.</p>
+<p><strong>Answer</strong>: ALB in public subnets -> ASG across 2 AZs in private subnets -> RDS Multi-AZ</p>
+<p><strong>Why others are wrong</strong>:</p>
+<ul>
+<li>RDS Read Replica = read scaling, NOT failover</li>
+<li>Single AZ ASG = not highly available</li>
+<li>EC2 without ASG = no auto-scaling</li>
+</ul>
+<hr>
+<h3 id="scenario-2-disaster-recovery">Scenario 2: Disaster Recovery</h3>
+<p><strong>Question</strong>: A company needs RPO = 1 hour, RTO = 4 hours. They want the most cost-effective DR solution.</p>
+<p><strong>Thinking key</strong>: RPO/RTO in hours = Pilot Light. "cost-effective" = not active-active.</p>
+<p><strong>Answer</strong>: Pilot Light — backup data to DR region, minimal infra running, scale up on disaster</p>
+<p><strong>Why others are wrong</strong>:</p>
+<ul>
+<li>Backup & Restore = RTO in hours-days (slowest)</li>
+<li>Warm Standby = RTO in minutes (more expensive than needed)</li>
+<li>Multi-Site Active-Active = most expensive, overkill for 4-hour RTO</li>
+</ul>
+<hr>
+<h3 id="scenario-3-serverless-event-processing">Scenario 3: Serverless Event Processing</h3>
+<p><strong>Question</strong>: When a file is uploaded to S3, it must be processed, results stored, and the user notified. Least operational overhead.</p>
+<p><strong>Thinking key</strong>: "least operational overhead" = serverless throughout. S3 can trigger Lambda directly.</p>
+<p><strong>Answer</strong>: S3 Event -> Lambda -> DynamoDB (results) -> SNS (notification)</p>
+<p><strong>Why others are wrong</strong>:</p>
+<ul>
+<li>S3 -> SQS -> Lambda -> ... = unnecessary complexity (SQS not needed for simple trigger)</li>
+<li>EC2-based processing = not least operational overhead</li>
+<li>Kinesis = overkill for file upload events</li>
+</ul>
+<hr>
+<h3 id="scenario-4-global-application">Scenario 4: Global Application</h3>
+<p><strong>Question</strong>: Users worldwide need low latency for both static and dynamic content.</p>
+<p><strong>Thinking key</strong>: Static = cache it. Dynamic = optimize routing.</p>
+<p><strong>Answer</strong>: CloudFront (static content) + Global Accelerator (dynamic TCP/UDP) + Route 53 (DNS)</p>
+<p><strong>Why others are wrong</strong>:</p>
+<ul>
+<li>CloudFront alone = only caches static, dynamic still slow</li>
+<li>Global Accelerator alone = no caching for static content</li>
+<li>Multiple regional ALBs = no edge optimization</li>
+</ul>
+<hr>
+<h3 id="scenario-5-database-migration">Scenario 5: Database Migration</h3>
+<p><strong>Question</strong>: Migrate on-premises Oracle to Aurora with minimal downtime.</p>
+<p><strong>Thinking key</strong>: Heterogeneous migration (Oracle -> Aurora) needs schema conversion + data migration.</p>
+<p><strong>Answer</strong>: AWS SCT (schema conversion) + AWS DMS (data migration with ongoing replication)</p>
+<p><strong>Why others are wrong</strong>:</p>
+<ul>
+<li>DMS alone = cannot convert Oracle schema to Aurora</li>
+<li>Snowball = offline, causes downtime</li>
+<li>DataSync = file-level, not database</li>
+</ul>
+<hr>
+<h3 id="scenario-6-hybrid-connectivity">Scenario 6: Hybrid Connectivity</h3>
+<p><strong>Question</strong>: On-premises data center needs dedicated, high-bandwidth, low-latency connection to AWS with a cheap backup.</p>
+<p><strong>Thinking key</strong>: "dedicated, high-bandwidth" = Direct Connect. "cheap backup" = VPN.</p>
+<p><strong>Answer</strong>: Direct Connect (primary) + Site-to-Site VPN (backup)</p>
+<p><strong>Why others are wrong</strong>:</p>
+<ul>
+<li>VPN alone = max 1.25 Gbps, over internet (not dedicated)</li>
+<li>Direct Connect alone = no backup</li>
+<li>VPC Peering = VPC-to-VPC only, not on-premises</li>
+</ul>
+<hr>
+<h3 id="scenario-7-security-incident-response">Scenario 7: Security Incident Response</h3>
+<p><strong>Question</strong>: Detect unauthorized API calls and automatically respond.</p>
+<p><strong>Thinking key</strong>: Detect API calls = CloudTrail. Auto-respond = EventBridge + Lambda.</p>
+<p><strong>Answer</strong>: CloudTrail -> EventBridge (pattern match) -> Lambda (automated response) + SNS (alert)</p>
+<p><strong>Why others are wrong</strong>:</p>
+<ul>
+<li>GuardDuty = threat detection, not API call logging</li>
+<li>Config = configuration changes, not API calls</li>
+<li>CloudWatch Alarms = metrics-based, not event-pattern-based</li>
+</ul>
+<hr>
+<h3 id="scenario-8-shared-file-storage">Scenario 8: Shared File Storage</h3>
+<p><strong>Question</strong>: Multiple Linux EC2 instances need to share files concurrently. Windows instances need SMB shares with Active Directory integration.</p>
+<p><strong>Thinking key</strong>: Linux shared = NFS. Windows + AD = SMB + AD.</p>
+<p><strong>Answer</strong>: Amazon EFS (Linux) + Amazon FSx for Windows File Server (Windows)</p>
+<p><strong>Why others are wrong</strong>:</p>
+<ul>
+<li>EBS Multi-Attach = same AZ only, not designed for general file sharing</li>
+<li>EFS for Windows = EFS is NFS only, not SMB</li>
+<li>S3 = object storage, not a file system (no POSIX)</li>
+</ul>
+<hr>
+<h2 id="17-last-minute-service-reference">17. LAST-MINUTE SERVICE REFERENCE</h2>
+<table>
+<tr><td>Service</td><td>What It Does</td></tr>
+<tr><td><strong>Athena</strong></td><td>Serverless SQL queries on S3, ad-hoc</td></tr>
+<tr><td><strong>Macie</strong></td><td>Scans S3 for PII/sensitive data</td></tr>
+<tr><td><strong>GuardDuty</strong></td><td>Threat detection (VPC Flow Logs, DNS, CloudTrail)</td></tr>
+<tr><td><strong>Inspector</strong></td><td>EC2/container vulnerability scanning</td></tr>
+<tr><td><strong>Rekognition</strong></td><td>Image analysis/moderation</td></tr>
+<tr><td><strong>Textract</strong></td><td>Extract text from PDF/images</td></tr>
+<tr><td><strong>AppFlow</strong></td><td>SaaS -> S3 data transfer</td></tr>
+<tr><td><strong>DataSync</strong></td><td>On-prem -> AWS data transfer (online)</td></tr>
+<tr><td><strong>Snowball</strong></td><td>On-prem -> AWS data transfer (offline, large data)</td></tr>
+<tr><td><strong>DMS</strong></td><td>Database migration (online, minimum downtime)</td></tr>
+<tr><td><strong>Aurora Cloning</strong></td><td>Fast copy of production DB for testing</td></tr>
+<tr><td><strong>RDS Proxy</strong></td><td>Lambda -> DB connection management</td></tr>
+<tr><td><strong>DAX</strong></td><td>DynamoDB cache (sub-millisecond)</td></tr>
+<tr><td><strong>ElastiCache Redis</strong></td><td>Session store, persistence, complex types</td></tr>
+<tr><td><strong>ElastiCache Memcached</strong></td><td>Simple cache, multi-threaded</td></tr>
+<tr><td><strong>Step Functions</strong></td><td>Workflow orchestration (Lambda, ECS, etc.)</td></tr>
+<tr><td><strong>EventBridge</strong></td><td>Event-driven automation, scheduled rules</td></tr>
+<tr><td><strong>Lake Formation</strong></td><td>Data lake access control, tag-based</td></tr>
+<tr><td><strong>Storage Gateway</strong></td><td>Hybrid storage (File, Volume, Tape)</td></tr>
+<tr><td><strong>Global Accelerator</strong></td><td>TCP/UDP global acceleration, static IPs</td></tr>
+<tr><td><strong>PrivateLink</strong></td><td>Private VPC access to services</td></tr>
+<tr><td><strong>Transit Gateway</strong></td><td>Multi-VPC/on-prem connectivity hub</td></tr>
+<tr><td><strong>Organizations + SCP</strong></td><td>Account management + service restrictions</td></tr>
+<tr><td><strong>AWS Backup</strong></td><td>Centralized backup across services</td></tr>
+<tr><td><strong>IAM Identity Center</strong></td><td>SSO for multiple AWS accounts</td></tr>
+<tr><td><strong>Cost Explorer</strong></td><td>Visualize and analyze AWS costs</td></tr>
+<tr><td><strong>AWS Budgets</strong></td><td>Set custom cost/usage budgets and alerts</td></tr>
+<tr><td><strong>Trusted Advisor</strong></td><td>Best practice checks (cost, security, performance)</td></tr>
+<tr><td><strong>CloudFormation</strong></td><td>Infrastructure as Code (templates)</td></tr>
+<tr><td><strong>CDK</strong></td><td>Define infra using programming languages</td></tr>
+</table>
+<hr>
+<h2 id="18-exam-day-strategy">18. EXAM DAY STRATEGY</h2>
+<h3 id="time-management">Time Management</h3>
+<ul>
+<li><strong>65 questions in 130 minutes</strong> = ~2 minutes per question</li>
+<li>Flag difficult questions, move on, come back</li>
+<li>Aim to finish with 15 minutes for review</li>
+</ul>
+<h3 id="question-approach">Question Approach</h3>
+<ul>
+<li><strong>Read the LAST sentence first</strong> — know what they are asking before reading the scenario</li>
+<li><strong>Identify keywords</strong> — "least overhead", "most cost-effective", "most secure", "highly available"</li>
+<li><strong>Eliminate 2 wrong answers</strong> immediately using the patterns in Section 5</li>
+<li><strong>Choose between remaining 2</strong> using keyword mappings in Section 3</li>
+</ul>
+<h3 id="key-decision-framework">Key Decision Framework</h3>
+<pre><code>"least operational overhead" -&gt; Serverless/Managed
+"most cost-effective"        -&gt; Spot/RI/Savings Plans/right-size
+"most secure"                -&gt; Private endpoints, encryption, least privilege
+"highly available"           -&gt; Multi-AZ, multiple AZs, auto-recovery
+"lowest latency"             -&gt; CloudFront, Global Accelerator, placement groups
+"decouple"                   -&gt; SQS, SNS
+"real-time"                  -&gt; Kinesis
+"batch"                      -&gt; SQS, Batch, Glue</code></pre>
+<h3 id="common-exam-traps">Common Exam Traps</h3>
+<ul>
+<li><strong>Numbers matter</strong>: "5 TB of data" -> Snowball Edge, not DataSync</li>
+<li><strong>"Must" vs "Should"</strong>: "Must be highly available" eliminates single-AZ</li>
+<li><strong>Two correct answers</strong>: One is correct, one is "more correct" — pick the one that best matches the keyword</li>
+<li><strong>Distractor services</strong>: GuardDuty is NOT for DDoS, Config is NOT for API logging</li>
+</ul>
+<hr>
+<h2 id="19-last-24-hour-revision-checklist">19. LAST 24-HOUR REVISION CHECKLIST</h2>
+<p>Know these before entering the exam:</p>
+<ul>
+<li>[ ] <strong>S3 storage classes</strong> and when to use each (Standard, IA, Intelligent-Tiering, Glacier, Deep Archive)</li>
+<li>[ ] <strong>Object Lock</strong>: Compliance (nobody deletes) vs Governance (override possible)</li>
+<li>[ ] <strong>Gateway vs Interface VPC Endpoint</strong>: Gateway = free (S3, DynamoDB), Interface = costs money</li>
+<li>[ ] <strong>Config vs CloudTrail</strong>: Config = config changes, CloudTrail = API calls</li>
+<li>[ ] <strong>Multi-AZ vs Read Replica</strong>: Multi-AZ = HA, Read Replica = read performance</li>
+<li>[ ] <strong>ALB vs NLB</strong>: ALB = L7 HTTP/HTTPS, NLB = L4 TCP/UDP</li>
+<li>[ ] <strong>Shield vs WAF</strong>: Shield = DDoS, WAF = SQL injection/XSS</li>
+<li>[ ] <strong>Secrets Manager vs Parameter Store</strong>: Rotation = Secrets Manager, cheap config = Parameter Store</li>
+<li>[ ] <strong>SQS vs SNS</strong>: Queue (pull, 1 consumer) vs Topic (push, many consumers)</li>
+<li>[ ] <strong>Kinesis vs SQS</strong>: Streaming/analytics vs decoupling/buffering</li>
+<li>[ ] <strong>NACL vs Security Group</strong>: Stateless/subnet vs stateful/instance</li>
+<li>[ ] <strong>Route 53 policies</strong>: Simple, Weighted, Latency, Failover, Geolocation, Geoproximity, Multi-value</li>
+<li>[ ] <strong>IAM policy evaluation</strong>: Explicit DENY wins, then ALLOW, then implicit DENY</li>
+<li>[ ] <strong>Cross-account access</strong>: Use IAM Roles + STS AssumeRole, never share users</li>
+<li>[ ] <strong>Lambda limits</strong>: 6 MB sync / 1 MB async payload, 15 min max execution, 1000 concurrency</li>
+<li>[ ] <strong>RDS backup retention</strong>: Max 35 days automated</li>
+<li>[ ] <strong>EBS</strong>: Snapshots are incremental, volumes are AZ-specific</li>
+<li>[ ] <strong>CloudFront</strong>: OAC for new setups, Invalidation costs money</li>
+<li>[ ] <strong>Well-Architected 6 pillars</strong>: Operational Excellence, Security, Reliability, Performance, Cost, Sustainability</li>
+<li>[ ] <strong>DR strategies</strong>: Backup & Restore (cheapest) -> Pilot Light -> Warm Standby -> Multi-Site Active-Active (most expensive)</li>
+</ul>
+<hr>
+<blockquote><strong>EXAM STRATEGY</strong>: When you see "least operational overhead" choose serverless. When you see "private access" choose VPC endpoint. When you see "credential rotation" choose Secrets Manager. Eliminate 2 out of 4 choices immediately, then pick from the remaining 2 using these rules.</blockquote>
+<blockquote><strong>GOOD LUCK!</strong></blockquote>
+    </div>
+</body>
+</html>

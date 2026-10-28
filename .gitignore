@@ -1,0 +1,59 @@
+# Sisyphus planner files
+.sisyphus/
+.local/
+.codex
+.codex/
+.claude/
+.opencode/
+AGENTS.md
+_project_artifacts/
+
+# Development scripts (not needed in production)
+scripts/*
+!scripts/validate-questions.js
+
+# Node modules (if any)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Local decision notes
+PLAN.md
+CHEAP_MODEL_MASTER_PROMPT.md
+VERIFIER_CHECKLIST.md
+RUNBOOK.md
+DOCS_POLICY.md
+rewrite_sources.json
+thresholds.json
+question_status.schema.json
+generator_output.schema.json
+batch_input.schema.json
+fact_base.schema.json
+family_recipe.schema.json
+handover_snapshot.template.md
+GENERATION_PIPELINE_PROMPTS.md
+
+# Local rewrite runtime state
+question_status.json
+accepted_bank.json
+exam_distribution_report.json
+question_audit.json
+question_audit.csv
+rewrite_report.json
+handover_snapshot.md
+batch_input.json
+batch_draft_raw.json
+batch_output_raw.json
+batch_output_formatted.json
+batch_validation.json
+batch_output_accepted.json
+batch_review_notes.md
